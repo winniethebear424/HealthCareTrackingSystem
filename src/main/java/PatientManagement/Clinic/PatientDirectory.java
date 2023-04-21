@@ -10,6 +10,7 @@ import PatientManagement.Patient.Patient;
 import PatientManagement.Persona.Person;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -49,6 +50,22 @@ public class PatientDirectory {
         Patient patient = new Patient(person, clinic);
         patients.add(patient);
         return patient;
+    }
+
+    public Patient pickRandomPatient(){
+        if (patients.size() == 0) return null;
+        Random r = new Random();
+        int randonIndex = r.nextInt(patients.size());
+        return patients.get(randonIndex);
+    }
+
+
+    public ArrayList<Patient> getPatients() {
+        return patients;
+    }
+
+    public void addPatient(Patient patient) {
+        patients.add(patient);
     }
 
 }

@@ -5,22 +5,43 @@
  */
 package PatientManagement.Patient.Encounters;
 
+import PatientManagement.Clinic.Clinic;
+
 /**
  *
  * @author kal bugrara
  */
 public class Diagnosis {
-    String category; // infectious or Hereditary
+    String diseaseName;
+    String category; // "Infectious" or "Hereditary"
     boolean confirmed = false;
     Condition condition;
 
-    public Diagnosis(String cat, boolean c) {
+    public Diagnosis(String diseaseName, String cat, boolean c) {
+        this.diseaseName = diseaseName;
         category = cat;
         confirmed = c; // Assumption: if true then lab tests confirm that it is a diesease
     }
+    
+    public String getCategory() {
+        return category;
+    }
+
 
     public boolean isConfirmed() {
         return confirmed; // just return the boolean
+    }
+
+    public String getDiseaseName() {
+        return diseaseName;
+    }
+
+    public void setDiseaseName(String diseaseName) {
+        this.diseaseName = diseaseName;
+    }
+
+    public void setconfirmed(){
+        this.confirmed = true;        
     }
 
 }

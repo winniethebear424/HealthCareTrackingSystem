@@ -6,6 +6,12 @@
 package PatientManagement.Patient.ClinicalHistory;
 
 import java.util.ArrayList;
+import java.util.Date;
+
+import javax.xml.crypto.Data;
+
+import PatientManagement.Catalogs.VOrderItem;
+import PatientManagement.Patient.Patient;
 
 /**
  *
@@ -14,6 +20,20 @@ import java.util.ArrayList;
 public class VaccinationHistory {
 
     ArrayList<Vaccination> vaccinations;
+    Patient patient;
+
+    public VaccinationHistory(Patient patient){
+        vaccinations = new ArrayList<Vaccination>();
+        this.patient = patient;
+    }
+
+    public ArrayList<Vaccination> getVaccinations() {
+        return vaccinations;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
 
     public void addVaccination(Vaccination v) {
         vaccinations.add(v);

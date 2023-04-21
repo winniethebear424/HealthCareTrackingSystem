@@ -21,6 +21,38 @@ public class Person {
     ArrayList<Person> siblings;
     Patient patient;
     int age;
+    
+    public Person getMother() {
+        return mother;
+    }
+
+    public Person getFather() {
+        return father;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public ArrayList<Person> getSiblings() {
+        return siblings;
+    }
+
+    public void setSiblings(ArrayList<Person> siblings) {
+        this.siblings = siblings;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
 
     public Person(String id, int a) {
         this.id = id;

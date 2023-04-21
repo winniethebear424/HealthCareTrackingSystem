@@ -25,7 +25,7 @@ public class VitalSigns {
     }
 
     public VitalSignMetric addNewVitals(String name, int value) {
-        Patient patient = encounter.getEncounterHistory().getPatient();
+        Patient patient = encounter.getPatient();
         int age = patient.getPerson().getAge();
         Limits limits = encounter.getVitalSignLimits(age, name);
         if (limits == null)

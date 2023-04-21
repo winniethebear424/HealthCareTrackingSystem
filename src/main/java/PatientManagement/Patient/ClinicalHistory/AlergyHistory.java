@@ -14,7 +14,15 @@ import java.util.ArrayList;
 public class AlergyHistory {
     ArrayList<Alergy> alergies;
 
+    public ArrayList<Alergy> getAlergies() {
+        return alergies;
+    }
+
     public AlergyHistory() {
         alergies = new ArrayList<Alergy>();
+    }
+
+    public void addAlergyInfo(Alergy alergy){
+        alergies.add(alergy);
     }
 }

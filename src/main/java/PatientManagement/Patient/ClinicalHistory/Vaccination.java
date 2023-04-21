@@ -5,16 +5,44 @@
  */
 package PatientManagement.Patient.ClinicalHistory;
 
+import java.util.Date;
+
 import PatientManagement.Catalogs.VOrderItem;
+import PatientManagement.Clinic.Clinic;
+import PatientManagement.Patient.Patient;
 
 /**
  *
  * @author kal bugrara
  */
 public class Vaccination {
-    VOrderItem voi;
+    // represent a completed administration of a vaccine to a patient
+    VOrderItem vOrderItem;
+    Date date;
+    int dose;
+    Clinic clinic;
 
-    public Vaccination() {
-        // voi = vo;
+    public Vaccination(VOrderItem vOrderItem, Date date, int dose, Clinic clinic) {
+        this.vOrderItem = vOrderItem;
+        this.date = date;
+        this.dose = dose;
+        this.clinic = clinic;
     }
+
+    public VOrderItem getvOrderItem() {
+        return vOrderItem;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public int getDose() {
+        return dose;
+    }
+
+    public Clinic getClinic() {
+        return clinic;
+    }
+
 }

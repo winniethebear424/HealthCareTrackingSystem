@@ -36,59 +36,87 @@ public class PatientCareMain {
      */
     public static void main(String[] args) {
 
-        Clinic clinic = new Clinic("Northeastern Hospitals");
+        // Clinic clinic = new Clinic("Northeastern Hospitals");
 
-        // Configuring vital signs catalog
-        VitalSignsCatalog vsc = clinic.getVitalSignsCatalog();
+        // // Configuring vital signs catalog
+        // VitalSignsCatalog vsc = clinic.getVitalSignsCatalog();
 
-        AgeGroup adults_21_50 = vsc.newAgeGroup("Adults 21-50", 50, 21);
-        VitalSignLimits heartRateLimits = vsc.newVitalSignLimits("HR");
-        VitalSignLimits bloodPressureLimits = vsc.newVitalSignLimits("BP");
-        heartRateLimits.addLimits(adults_21_50, 105, 55);
-        bloodPressureLimits.addLimits(adults_21_50, 140, 70);
+        // AgeGroup adults_21_50 = vsc.newAgeGroup("Adults 21-50", 50, 21);
+        // VitalSignLimits heartRateLimits = vsc.newVitalSignLimits("HR");
+        // VitalSignLimits bloodPressureLimits = vsc.newVitalSignLimits("BP");
+        // heartRateLimits.addLimits(adults_21_50, 105, 55);
+        // bloodPressureLimits.addLimits(adults_21_50, 140, 70);
 
-        // Adding a person
-        PersonDirectory pd = clinic.getPersonDirectory();
-        Person archilPerson = pd.newPerson("archil", 49);
+        // // Adding a person
+        // PersonDirectory pd = clinic.getPersonDirectory();
+        // Person archilPerson = pd.newPerson("archil", 49);
 
-        // Creating a patient
+        // // Creating a patient
+        // PatientDirectory patientDirectory = clinic.getPatientDirectory();
+        // Patient archil = patientDirectory.newPatient(archilPerson);
+
+        // // Create a location - Greater Boston Area, MA
+
+        // LocationList locationsInMA = clinic.getLocationList();
+        // Location greaterBostonArea = locationsInMA.newLocation("Greater Boston Area");
+
+        // SiteCatalog siteCatalog = clinic.getSiteCatalog();
+        // Site nuCurryCenter = siteCatalog.newSite(greaterBostonArea);
+        // Site nuHealthServices = siteCatalog.newSite(greaterBostonArea);
+
+        // EventSchedule eventSchedule = new EventSchedule();
+
+        // Event patriotsWeekendPatientScreening = eventSchedule.newEvent(nuHealthServices, "0");
+
+        // Encounter archilsVisitToDoctor = archil.newEncounter("Seasonal Flu", patriotsWeekendPatientScreening);
+        // archilsVisitToDoctor.addNewVitals("HR", 90);
+        // archilsVisitToDoctor.addNewVitals("BP", 100);
+
+        // // System.out.println("Does the patient feel well? " +
+        // // archilsVisitToDoctor.areVitalsNormal());
+
+        // // Java Faker Sandbox
+
+        // Faker magicBox = new Faker();
+
+        // for (int i = 0; i < 20; i++) {
+        //     // String randomBloodGroup = magicBox.name().bloodGroup();
+        //     // System.out.println(randomBloodGroup);
+
+        //     String randomAddress = magicBox.address().fullAddress();
+        //     System.out.println(randomAddress);
+
+        //     // String randomAnimal = magicBox.animal().name();
+        //     // System.out.println(randomAnimal);
+        // }
+
+
+
+        // build a clinic and load relevant data
+        Clinic clinic = ConfigureAMedicalSystem.createAClinicAndLoadData("NEU Bug Writers");
         PatientDirectory patientDirectory = clinic.getPatientDirectory();
-        Patient archil = patientDirectory.newPatient(archilPerson);
 
-        // Create a location - Greater Boston Area, MA
+        // pick a random patient 
+        Patient randomPatient = patientDirectory.pickRandomPatient();
 
-        LocationList locationsInMA = clinic.getLocationList();
-        Location greaterBostonArea = locationsInMA.newLocation("Greater Boston Area");
+        // check the patient's personal information
+        randomPatient.printPersonalInfo();
 
-        SiteCatalog siteCatalog = clinic.getSiteCatalog();
-        Site nuCurryCenter = siteCatalog.newSite(greaterBostonArea);
-        Site nuHealthServices = siteCatalog.newSite(greaterBostonArea);
+        // check the patient's lasted encounter information
+        randomPatient.getEncounterHistory().pickLastedEncounter().printEncounterSummary();
 
-        EventSchedule eventSchedule = new EventSchedule();
+        // check the patient's vaccination history
+        randomPatient.printVaccinationHistoryReport();
 
-        Event patriotsWeekendPatientScreening = eventSchedule.newEvent(nuHealthServices, "0");
+        // check the patient's assessment information
+        randomPatient.printAssessmentReport();
 
-        Encounter archilsVisitToDoctor = archil.newEncounter("Seasonal Flu", patriotsWeekendPatientScreening);
-        archilsVisitToDoctor.addNewVitals("HR", 90);
-        archilsVisitToDoctor.addNewVitals("BP", 100);
+        // check the patient's medication history
+        randomPatient.printMedicationHistory();
 
-        // System.out.println("Does the patient feel well? " +
-        // archilsVisitToDoctor.areVitalsNormal());
+        // check the patient's diagnosis history report
+        randomPatient.printDiagnosisReport();
 
-        // Java Faker Sandbox
-
-        Faker magicBox = new Faker();
-
-        for (int i = 0; i < 20; i++) {
-            // String randomBloodGroup = magicBox.name().bloodGroup();
-            // System.out.println(randomBloodGroup);
-
-            String randomAddress = magicBox.address().fullAddress();
-            System.out.println(randomAddress);
-
-            // String randomAnimal = magicBox.animal().name();
-            // System.out.println(randomAnimal);
-        }
 
     }
 

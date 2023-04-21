@@ -6,6 +6,7 @@
 package PatientManagement.Clinic;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -20,9 +21,9 @@ public class EventSchedule {
         scheduledevents = new ArrayList<Event>();
     }
 
-    public Event newEvent(Site s, String budgetnumer) {
+    public Event newEvent(Site s, String budgetnumer, Date date) {
 
-        Event newevent = new Event(s, budgetnumer);
+        Event newevent = new Event(s, budgetnumer, date);
         scheduledevents.add(newevent);
         return newevent;
     }
@@ -39,5 +40,8 @@ public class EventSchedule {
         }
         return sum;
 
+    }
+    public ArrayList<Event> getScheduledevents() {
+        return scheduledevents;
     }
 }

@@ -7,6 +7,7 @@ package PatientManagement.Clinic;
 
 import PatientManagement.Patient.Encounters.Encounter;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -14,16 +15,15 @@ import java.util.ArrayList;
  */
 public class Event {
 
-    String date;
+    Date date;
     Site site;
     String budgetcode;
-
     ArrayList<Encounter> encounters; // encounters that day
 
-    public Event(Site s, String bc) {
+    public Event(Site s, String bc, Date date) {
         site = s;
         budgetcode = bc;
-        date = "2022/02/27";
+        this.date = date;
         encounters = new ArrayList<Encounter>(); // encounters done at the event/site
 
     }
@@ -65,5 +65,8 @@ public class Event {
         } else {
             return false;
         }
+    }
+    public Date getDate() {
+        return date;
     }
 }
