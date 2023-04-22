@@ -7,6 +7,7 @@ import PatientManagement.Catalogs.VitalSignsCatalog;
 import PatientManagement.Clinic.Clinic;
 import PatientManagement.Clinic.Event;
 import PatientManagement.Clinic.EventSchedule;
+import PatientManagement.Clinic.InNetworkHealthCareCatalog;
 import PatientManagement.Clinic.Location;
 import PatientManagement.Clinic.LocationList;
 import PatientManagement.Clinic.PatientDirectory;
@@ -36,6 +37,44 @@ public class PatientCareMain {
      */
     public static void main(String[] args) {
 
+        // build a clinic and load relevant data
+        Clinic clinic = ConfigureAMedicalSystem.createAClinicAndLoadData("NEU Bug Writers");
+        // PatientDirectory patientDirectory = clinic.getPatientDirectory();
+        
+
+        // // pick a random patient 
+        // Patient randomPatient = patientDirectory.pickRandomPatient();
+
+        // // check the patient's personal information
+        // randomPatient.printPersonalInfo();
+
+        // // check the patient's lasted encounter information
+        // randomPatient.getEncounterHistory().pickLastedEncounter().printEncounterSummary();
+
+        // // check the patient's vaccination history
+        // randomPatient.printVaccinationHistoryReport();
+
+        // // check the patient's assessment information
+        // randomPatient.printAssessmentReport();
+
+        // // check the patient's medication history
+        // randomPatient.printMedicationHistory();
+
+        // // check the patient's diagnosis history report
+        // randomPatient.printDiagnosisReport();
+
+        // InNetworkHealthCareCatalog inNetworkHealthCareCatalog = clinic.getNetworkHealthCareList();
+        // inNetworkHealthCareCatalog.printSJMedicalSource();
+        clinic.printoutInfectionReport(1);
+
+    }
+
+
+
+
+
+
+        // // ---------------------------- there are initial codes below -----------------------------
         // Clinic clinic = new Clinic("Northeastern Hospitals");
 
         // // Configuring vital signs catalog
@@ -90,34 +129,6 @@ public class PatientCareMain {
         //     // System.out.println(randomAnimal);
         // }
 
-
-
-        // build a clinic and load relevant data
-        Clinic clinic = ConfigureAMedicalSystem.createAClinicAndLoadData("NEU Bug Writers");
-        PatientDirectory patientDirectory = clinic.getPatientDirectory();
-
-        // pick a random patient 
-        Patient randomPatient = patientDirectory.pickRandomPatient();
-
-        // check the patient's personal information
-        randomPatient.printPersonalInfo();
-
-        // check the patient's lasted encounter information
-        randomPatient.getEncounterHistory().pickLastedEncounter().printEncounterSummary();
-
-        // check the patient's vaccination history
-        randomPatient.printVaccinationHistoryReport();
-
-        // check the patient's assessment information
-        randomPatient.printAssessmentReport();
-
-        // check the patient's medication history
-        randomPatient.printMedicationHistory();
-
-        // check the patient's diagnosis history report
-        randomPatient.printDiagnosisReport();
-
-
-    }
+    
 
 }

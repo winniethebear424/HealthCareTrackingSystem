@@ -80,13 +80,25 @@ public class Patient {
     }
 
     public boolean isConfirmedPositive() {
+        ArrayList<Encounter> patientencounterlist = encounterhistory.getEncounterList();
+        for (Encounter currentencounter : patientencounterlist) {
+            Diagnosis diag = currentencounter.getDiagnosis();
+            if(diag.isConfirmed()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isConfirmedInfectiousPositive() {
 
         ArrayList<Encounter> patientencounterlist = encounterhistory.getEncounterList();
 
         for (Encounter currentencounter : patientencounterlist) {
             Diagnosis diag = currentencounter.getDiagnosis();
-            return diag.isConfirmed();
-
+            if(diag.isConfirmedInfectious()) {
+                return true;
+            }
         }
         return false;
     }
@@ -151,6 +163,15 @@ public class Patient {
         this.alergyhistory = alergyhistory;
     }
 
+    public String getPastientLastestSeenTimeString(){
+        return encounterhistory.pickLastedEncounter().getEvent().getDateString();
+    }
+
+    public String getPastientLastestSeenLocation(){
+        return encounterhistory.pickLastedEncounter().getEvent().getSite().getLocationString();
+    }
+
+
     public void printVaccinationHistoryReport(){
         System.out.println("-------------------------------------------------------------------------------------------------------");
         System.out.println("                              " + person.getPersonId() + "'s Vaccination History");
@@ -167,7 +188,7 @@ public class Patient {
             String preventedDisease = vaccination.getvOrderItem().getSelectedVaccine().getPreventedInfectiousDisease();
             int dose = vaccination.getvOrderItem().getDose();
             Date date = vaccination.getDate();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
             String formattedDate = dateFormat.format(date);
             System.out.printf("%-4s | %-30s | %-30s | %-5s | %-28s\n",(index + 1) + ". " , vaccineName , preventedDisease , dose , formattedDate);
         }
@@ -194,7 +215,7 @@ public class Patient {
                 assessmentResult = "Negative";
             }
             Date date = assessmentOrder.getDate();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
             String formattedDate = dateFormat.format(date);
             System.out.printf("%-4s | %-40s | %-10s | %-12s\n", (index + 1) + ". " , assessmentName , assessmentResult , formattedDate);
         }
@@ -235,7 +256,7 @@ public class Patient {
         for (Encounter encounter: encounterhistory.getEncounterList()){
             int index = encounterhistory.getEncounterList().indexOf(encounter);
             Date date = encounter.getEvent().getDate();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
             String formattedDate = dateFormat.format(date);
             String chiefComplaint = encounter.getChiefComplaint();
             String diagnosisCategory = encounter.getDiagnosis().getDiseaseName() + " (" + encounter.getDiagnosis().getCategory()+ ") ";
@@ -313,7 +334,7 @@ public class Patient {
         System.out.println();
         System.out.println("----------- Vaccination Record -----------");
         for (Vaccination vaccination : vaccinationHistory.getVaccinations()) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
             String formattedDate = dateFormat.format(vaccination.getDate());
             System.out.printf("%-25s | %-18s\n", vaccination.getvOrderItem().getSelectedVaccine().getVaccineName() , formattedDate);
         }

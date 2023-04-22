@@ -9,6 +9,22 @@ public class VitalSignMetric {
     Limits upperLower;
     int value;
 
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Limits getUpperLower() {
+        return upperLower;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
     public VitalSignMetric(Patient p, String n, Limits l, int v) {
         patient = p;
         name = n;

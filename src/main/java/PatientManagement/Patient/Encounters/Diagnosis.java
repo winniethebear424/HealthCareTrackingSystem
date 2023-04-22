@@ -27,6 +27,13 @@ public class Diagnosis {
         return category;
     }
 
+    public boolean isConfirmedInfectious(){
+        if ( category == "Infectious" && confirmed){
+            return true;
+        } else{
+            return false;
+        }
+    }
 
     public boolean isConfirmed() {
         return confirmed; // just return the boolean

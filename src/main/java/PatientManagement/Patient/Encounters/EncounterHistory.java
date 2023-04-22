@@ -67,4 +67,16 @@ public class EncounterHistory {
         if (encounters.size() == 0) return null;
         return encounters.get(encounters.size() - 1);
     }
+
+    public int getConfirmedDiagnosesCount() {
+        int count = 0;
+        for( Encounter encounter: encounters){
+            if (encounter.getDiagnosis().isConfirmed()) {
+                count++;
+            }
+        }
+        return count;
+    }
+    
+
 }

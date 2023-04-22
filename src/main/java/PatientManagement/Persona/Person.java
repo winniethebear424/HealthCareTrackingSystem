@@ -2,6 +2,8 @@ package PatientManagement.Persona;
 
 import PatientManagement.Patient.Patient;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -21,6 +23,14 @@ public class Person {
     ArrayList<Person> siblings;
     Patient patient;
     int age;
+    HashMap<String, String> Seen;
+
+    public Person(String id, int a) {
+        this.id = id;
+        siblings = new ArrayList<Person>();
+        age = a;
+        Seen = new HashMap<String, String>();
+    }
     
     public Person getMother() {
         return mother;
@@ -54,11 +64,6 @@ public class Person {
         this.patient = patient;
     }
 
-    public Person(String id, int a) {
-        this.id = id;
-        siblings = new ArrayList<Person>();
-        age = a;
-    }
 
     public String getPersonId() {
         return id;
@@ -87,4 +92,36 @@ public class Person {
     public int getAge() {
         return age;
     }
+    
+    public void addSeen(String time, String location) {    //Set
+        Seen.put(time, location);
+    }
+
+    public String getSeenTimeByLocation(String location){
+        for (Map.Entry<String, String> entry : Seen.entrySet()) {
+            if (entry.getValue().equals(location)) {
+                return entry.getKey();
+            }
+        }
+        return "Location not found";
+    }
+
+    public HashMap<String, String> getSeen() {
+        return Seen;
+    }   //This is to show SeenHistory
+
+
+    public String getLastSeen() {    //This is to get the most recent track
+        String mostRecent = null;
+        for (Map.Entry<String,String>entry: Seen.entrySet()){
+            if (mostRecent == null || entry.getKey().compareTo(mostRecent)>0) {
+                mostRecent = entry.getKey();
+            }
+        }
+        if (mostRecent !=null){
+            System.out.println(mostRecent+ ": " + Seen.get(mostRecent));
+        }
+        return mostRecent+ ": " +Seen.get(mostRecent);
+        }
+
 }

@@ -6,6 +6,8 @@
 package PatientManagement.Clinic;
 
 import PatientManagement.Patient.Encounters.Encounter;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -25,7 +27,6 @@ public class Event {
         budgetcode = bc;
         this.date = date;
         encounters = new ArrayList<Encounter>(); // encounters done at the event/site
-
     }
 
     public void addEncounter(Encounter en) {
@@ -68,5 +69,15 @@ public class Event {
     }
     public Date getDate() {
         return date;
+    }
+
+    public String getDateString(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+        String formattedDate = dateFormat.format(date);
+        return formattedDate;
+    }
+
+    public Site getSite() {
+        return site;
     }
 }

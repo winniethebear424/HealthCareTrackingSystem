@@ -5,6 +5,7 @@
  */
 package PatientManagement.Patient.ClinicalHistory;
 
+import PatientManagement.Patient.Patient;
 import PatientManagement.Patient.Encounters.Diagnosis;
 import java.util.ArrayList;
 import java.util.Random;
@@ -46,8 +47,7 @@ public class DiseaseCatalog {
         Random r = new Random();
         int randonIndex = r.nextInt(hereditaryDiseaselist.size());
         return hereditaryDiseaselist.get(randonIndex).getDiseaseName();
-    }
-        
+    }        
 
     public ArrayList<Diagnosis> getDiseaselist() {
         return diseaselist;

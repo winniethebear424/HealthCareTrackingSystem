@@ -1,3 +1,4 @@
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
@@ -6,15 +7,20 @@ import java.util.concurrent.ThreadPoolExecutor.DiscardOldestPolicy;
 
 import com.github.javafaker.Faker;
 
+import PatientManagement.Catalogs.AgeGroup;
 import PatientManagement.Catalogs.Drug;
 import PatientManagement.Catalogs.DrugCatalog;
 import PatientManagement.Catalogs.VOrderItem;
 import PatientManagement.Catalogs.VaccineCatalog;
+import PatientManagement.Catalogs.VitalSignLimits;
+import PatientManagement.Catalogs.VitalSignsCatalog;
 import PatientManagement.Clinic.Clinic;
 import PatientManagement.Clinic.Event;
 import PatientManagement.Clinic.EventSchedule;
+import PatientManagement.Clinic.InNetworkHealthCareCatalog;
 import PatientManagement.Clinic.Location;
 import PatientManagement.Clinic.LocationList;
+import PatientManagement.Clinic.OtherHealthCare;
 import PatientManagement.Clinic.PatientDirectory;
 import PatientManagement.Clinic.Site;
 import PatientManagement.Clinic.SiteCatalog;
@@ -35,6 +41,9 @@ public class ConfigureAMedicalSystem {
     public static Clinic createAClinicAndLoadData(String name) {
         Clinic clinic = new Clinic(name);
 
+        // Add vital signs info
+        // loadVitalSignStandard(clinic);
+
         // Add dieases
         loadDiseaseInfo(clinic);
 
@@ -54,6 +63,9 @@ public class ConfigureAMedicalSystem {
         // Add Evens
         loadEventandEncounters(clinic);
 
+        // Add other medical source
+        loadOtherMedicalSource(clinic);
+
         return clinic;
     }
 
@@ -62,6 +74,48 @@ public class ConfigureAMedicalSystem {
         int randomInt = lower + r.nextInt(upper - lower);
         return randomInt;
     }
+
+    // static void loadVitalSignStandard(Clinic clinic){
+    //     VitalSignsCatalog vitalSignsCatalog = clinic.getVitalSignsCatalog();
+
+    //     // set adult age groups
+    //     AgeGroup youngAdult = vitalSignsCatalog.newAgeGroup("YoungAdult", 34, 18);
+    //     AgeGroup middleAgeAdult = vitalSignsCatalog.newAgeGroup("MiddleAgeAdult", 64, 35);
+    //     AgeGroup theElderly = vitalSignsCatalog.newAgeGroup("TheElderly", 100, 65);
+
+    //     // set Respiratory Rate limits
+    //     VitalSignLimits youngRespiratory = vitalSignsCatalog.newVitalSignLimits("Respiratory Rate (per min): Young");
+    //     youngRespiratory.addLimits(youngAdult, 20, 12);
+    //     VitalSignLimits middleAgeRespiratory = vitalSignsCatalog.newVitalSignLimits("Respiratory Rate (per min): Middle Age");
+    //     middleAgeRespiratory.addLimits(middleAgeAdult,19 , 12);
+    //     VitalSignLimits elderlyRespiratory = vitalSignsCatalog.newVitalSignLimits("Respiratory Rate (per min): Elderly");
+    //     elderlyRespiratory.addLimits(theElderly,18 , 12);
+
+    //     // set Heart Rate
+    //     VitalSignLimits youngHeartRate = vitalSignsCatalog.newVitalSignLimits("Heart Rate (per min): Young");
+    //     youngHeartRate.addLimits(youngAdult, 110, 70);
+    //     VitalSignLimits middleAgeHeartRate = vitalSignsCatalog.newVitalSignLimits("Heart Rate (per min): Middle Age");
+    //     middleAgeHeartRate.addLimits(middleAgeAdult,100 , 65);
+    //     VitalSignLimits elderlyHeartRate = vitalSignsCatalog.newVitalSignLimits("Heart Rate (per min): Elderly");
+    //     elderlyHeartRate.addLimits(theElderly,100 , 60);
+
+    //     // set Systolic Blood Pressure
+    //     VitalSignLimits youngBloodPressure = vitalSignsCatalog.newVitalSignLimits("Systolic Blood Pressure: Young");
+    //     youngBloodPressure.addLimits(youngAdult, 120, 80);
+    //     VitalSignLimits middleAgeBloodPressure = vitalSignsCatalog.newVitalSignLimits("Systolic Blood Pressure: Middle Age");
+    //     middleAgeBloodPressure.addLimits(middleAgeAdult,120 , 90);
+    //     VitalSignLimits elderlyBloodPressure = vitalSignsCatalog.newVitalSignLimits("Systolic Blood Pressure: Elderly");
+    //     elderlyBloodPressure.addLimits(theElderly,140 , 110);
+
+    //     // set Body Mass Index (BMI) 
+    //     VitalSignLimits youngBMI = vitalSignsCatalog.newVitalSignLimits("Body Mass Index: Young");
+    //     youngBMI.addLimits(youngAdult, 25, 18);
+    //     VitalSignLimits middleAgeBMI = vitalSignsCatalog.newVitalSignLimits("Body Mass Index: Middle Age");
+    //     middleAgeBMI.addLimits(middleAgeAdult,28 , 20);
+    //     VitalSignLimits elderlyBMI = vitalSignsCatalog.newVitalSignLimits("Body Mass Index: Elderly");
+    //     elderlyBMI.addLimits(theElderly,30 , 25);
+    // }
+
 
     static void loadDiseaseInfo(Clinic clinic){
         DiseaseCatalog diseaseCatalog = clinic.getDiseaseCatalog();
@@ -107,8 +161,8 @@ public class ConfigureAMedicalSystem {
         PersonDirectory personDirectory = clinic.getPersonDirectory();
         PatientDirectory patientDirectory = clinic.getPatientDirectory();
         Faker faker = new Faker();
-        // generate 30 patients
-        for (int index = 1; index <= 30; index++) {
+        // generate 300 patients
+        for (int index = 1; index <= 300; index++) {
             // generate random patient full name
             String name = faker.name().fullName();
             // generate random patient age between 18 and 80
@@ -158,7 +212,7 @@ public class ConfigureAMedicalSystem {
             int randomVOrderCount = getRandom(0, 3);
             for (int orderIndex = 0; orderIndex < randomVOrderCount; orderIndex++) {
                 // set a random date for the vaccination order
-                Date randomDate = faker.date().past(3650, TimeUnit.DAYS); // up to 10 years ago
+                Date randomDate = faker.date().past(90, TimeUnit.DAYS); // up to 3 months ago
 
                 // randomly generate 1 to 3 vaccination order items for each vaccination order
                 int randomItemCount = getRandom(1, 3);
@@ -182,7 +236,7 @@ public class ConfigureAMedicalSystem {
             int randomAOrderCount = getRandom(0, 3);
             for (int aOrderIndex = 0; aOrderIndex < randomAOrderCount; aOrderIndex++) {
                 String assessmentName = faker.medical().diseaseName() + " Assessment";
-                Date randomADate = faker.date().past(3650, TimeUnit.DAYS); // up to 10 years ago
+                Date randomADate = faker.date().past(90, TimeUnit.DAYS); // up to 3 months ago
                 AssessmentOrder assessmentOrder = new AssessmentOrder(assessmentName, patient, randomADate, clinic);
                 patient.addAssessmentOrder(assessmentOrder);
                 assessmentOrder.setResult(faker.bool().bool());
@@ -191,7 +245,7 @@ public class ConfigureAMedicalSystem {
             // randomly generate 0 to 3 medication orders; And generate 1 to 3 drugs for each medication order
             int randomMOrderCount = getRandom(0, 3);
             for (int mOrderIndex = 0; mOrderIndex < randomMOrderCount; mOrderIndex++) {
-                Date randomMDate = faker.date().past((365*3), TimeUnit.DAYS); // up to 3 years ago
+                Date randomMDate = faker.date().past((90), TimeUnit.DAYS); // up to 3 months ago
                 int randomdrugCount = getRandom(1, 3);
                 ArrayList<Drug> drugs = new ArrayList<Drug>();
                 for (int drugIndex = 0; drugIndex < randomdrugCount; drugIndex++) {
@@ -206,7 +260,7 @@ public class ConfigureAMedicalSystem {
             // randomly generate 0 to 3 treatment orders
             int randomTOrderCount = getRandom(0, 3);
             for (int tOrderIndex = 0; tOrderIndex < randomTOrderCount; tOrderIndex++) {
-                Date randomTDate = faker.date().past((365*3), TimeUnit.DAYS); // up to 3 years ago
+                Date randomTDate = faker.date().past((90), TimeUnit.DAYS); // up to 3 months ago
                 String treatmentName = faker.medical().symptoms() + " Care";
                 TreatmentOrder treatmentOrder = new TreatmentOrder(patient, treatmentName, randomTDate, clinic);
                 patient.addTreatmentOrder(treatmentOrder);
@@ -222,21 +276,83 @@ public class ConfigureAMedicalSystem {
         PatientDirectory patientDirectory = clinic.getPatientDirectory();
         DrugCatalog drugCatalog = clinic.getDrugcatalog();
         DiseaseCatalog diseaseCatalog = clinic.getDiseaseCatalog();
+        VitalSignsCatalog vitalSignsCatalog = clinic.getVitalSignsCatalog();
         Faker faker = new Faker();
 
-        // generate 10 scheduled events
+        // set adult age groups
+        AgeGroup youngAdult = vitalSignsCatalog.newAgeGroup("YoungAdult", 34, 18);
+        AgeGroup middleAgeAdult = vitalSignsCatalog.newAgeGroup("MiddleAgeAdult", 64, 35);
+        AgeGroup theElderly = vitalSignsCatalog.newAgeGroup("TheElderly", 100, 65);
+
+        // set Respiratory Rate limits
+        VitalSignLimits youngRespiratory = vitalSignsCatalog.newVitalSignLimits("Respiratory Rate (per min): Young");
+        youngRespiratory.addLimits(youngAdult, 20, 12);
+        VitalSignLimits middleAgeRespiratory = vitalSignsCatalog.newVitalSignLimits("Respiratory Rate (per min): Middle Age");
+        middleAgeRespiratory.addLimits(middleAgeAdult,19 , 12);
+        VitalSignLimits elderlyRespiratory = vitalSignsCatalog.newVitalSignLimits("Respiratory Rate (per min): Elderly");
+        elderlyRespiratory.addLimits(theElderly,18 , 12);
+
+        // set Heart Rate
+        VitalSignLimits youngHeartRate = vitalSignsCatalog.newVitalSignLimits("Heart Rate (per min): Young");
+        youngHeartRate.addLimits(youngAdult, 110, 70);
+        VitalSignLimits middleAgeHeartRate = vitalSignsCatalog.newVitalSignLimits("Heart Rate (per min): Middle Age");
+        middleAgeHeartRate.addLimits(middleAgeAdult,100 , 65);
+        VitalSignLimits elderlyHeartRate = vitalSignsCatalog.newVitalSignLimits("Heart Rate (per min): Elderly");
+        elderlyHeartRate.addLimits(theElderly,100 , 60);
+
+        // set Systolic Blood Pressure
+        VitalSignLimits youngBloodPressure = vitalSignsCatalog.newVitalSignLimits("Systolic Blood Pressure: Young");
+        youngBloodPressure.addLimits(youngAdult, 120, 80);
+        VitalSignLimits middleAgeBloodPressure = vitalSignsCatalog.newVitalSignLimits("Systolic Blood Pressure: Middle Age");
+        middleAgeBloodPressure.addLimits(middleAgeAdult,120 , 90);
+        VitalSignLimits elderlyBloodPressure = vitalSignsCatalog.newVitalSignLimits("Systolic Blood Pressure: Elderly");
+        elderlyBloodPressure.addLimits(theElderly,140 , 110);
+
+        // set Body Mass Index (BMI) 
+        VitalSignLimits youngBMI = vitalSignsCatalog.newVitalSignLimits("Body Mass Index: Young");
+        youngBMI.addLimits(youngAdult, 25, 18);
+        VitalSignLimits middleAgeBMI = vitalSignsCatalog.newVitalSignLimits("Body Mass Index: Middle Age");
+        middleAgeBMI.addLimits(middleAgeAdult,28 , 20);
+        VitalSignLimits elderlyBMI = vitalSignsCatalog.newVitalSignLimits("Body Mass Index: Elderly");
+        elderlyBMI.addLimits(theElderly,30 , 25);
+
+        // generate 10 scheduled events for each cities in terms fo San Jose, Palo Alto, Sunnyvale
+        // 10 events in San Jose:
         for (int eventindex = 0; eventindex < 10; eventindex++) {
-            Location location = locationList.newLocation(faker.address().fullAddress());
+            String randomStreet = faker.address().streetAddress();
+            Location location = locationList.newLocation("San Jose", randomStreet);
             Site site = siteCatalog.newSite(location);
             String budgetnumer = faker.number().digits(8);
-            // up to 3 years ago
-            Date date = faker.date().past((365 * 3), TimeUnit.DAYS); 
+            // up to 3 month ago
+            Date date = faker.date().past((90), TimeUnit.DAYS); 
             eventSchedule.newEvent(site, budgetnumer, date);
-        }
 
-        // randomly generate 5 to 30 encounters for each event
+        }
+        // 10 events in Palo Alto:
+        for (int eventindex = 0; eventindex < 10; eventindex++) {
+            String randomStreet = faker.address().streetAddress();
+            Location location = locationList.newLocation("Palo Alto", randomStreet);
+            Site site = siteCatalog.newSite(location);
+            String budgetnumer = faker.number().digits(8);
+            // up to 3 months ago
+            Date date = faker.date().past((90), TimeUnit.DAYS); 
+            eventSchedule.newEvent(site, budgetnumer, date);
+    }
+        // 10 events in Sunnyvale:
+        for (int eventindex = 0; eventindex < 10; eventindex++) {
+            String randomStreet = faker.address().streetAddress();
+            Location location = locationList.newLocation("Sunnyvale", randomStreet);
+            Site site = siteCatalog.newSite(location);
+            String budgetnumer = faker.number().digits(8);
+            // up to 3 months ago
+            Date date = faker.date().past((90), TimeUnit.DAYS); 
+            eventSchedule.newEvent(site, budgetnumer, date);
+    }
+
+
+        // randomly generate 50 to 100 encounters for each event
         for (Event event: eventSchedule.getScheduledevents()){
-            int randomEncounterCount = getRandom(5, 30);
+            int randomEncounterCount = getRandom(50, 100);
             for (int encounterIndex = 0; encounterIndex < randomEncounterCount; encounterIndex++) {
                 // pick a random patient for each encounter
                 Patient patient = patientDirectory.pickRandomPatient();
@@ -306,11 +422,69 @@ public class ConfigureAMedicalSystem {
                         patient.addTreatmentOrder(treatmentOrder);
                     }
                 }
+
                 // create encounter and add order
                 Encounter encounter = new Encounter(patient, chiefComplaint, diagnosis, event, vaccinationOrder, assessmentOrder, medicationOrder, treatmentOrder);
                 event.addEncounter(encounter);
                 patient.getEncounterHistory().addEncounter(encounter);
+                patient.getPerson().addSeen(encounter.getEvent().getDateString(), encounter.getEvent().getSite().getLocationString());
+                patientDirectory.collectInfectiousPatient();
+                patientDirectory.collectconfirmedPatients();
+
+                // add vital sign information to the encounter for the patient
+                int fakeRespiratory = faker.number().numberBetween(10,22);
+                int fakeHeartRate = faker.number().numberBetween(65,115);
+                int fakeBloodPresure = faker.number().numberBetween(75,145);
+                int fakeBMI = faker.number().numberBetween(17,35);
+                if ( youngAdult.isInGroup(patient.getPerson().getAge()) ){
+                    encounter.addNewVitals("Respiratory Rate (per min): Young", fakeRespiratory);
+                    encounter.addNewVitals("Heart Rate (per min): Young", fakeHeartRate);
+                    encounter.addNewVitals("Systolic Blood Pressure: Young", fakeBloodPresure);
+                    encounter.addNewVitals("Body Mass Index: Young", fakeBMI);
+                }
+                else if ( middleAgeAdult.isInGroup(patient.getPerson().getAge()) ){
+                    encounter.addNewVitals("Respiratory Rate (per min): Middle Age", fakeRespiratory);
+                    encounter.addNewVitals("Heart Rate (per min): Middle Age", fakeHeartRate);
+                    encounter.addNewVitals("Systolic Blood Pressure: Middle Age", fakeBloodPresure);
+                    encounter.addNewVitals("Body Mass Index: Middle Age", fakeBMI);
+                } else {
+                    encounter.addNewVitals("Respiratory Rate (per min): Elderly", fakeRespiratory);
+                    encounter.addNewVitals("Heart Rate (per min): Elderly", fakeHeartRate);
+                    encounter.addNewVitals("Systolic Blood Pressure: Elderly", fakeBloodPresure);
+                    encounter.addNewVitals("Body Mass Index: Elderly", fakeBMI);
+                }
+                
             }
         }
+        }
+
+        static void loadOtherMedicalSource(Clinic clinic){
+            InNetworkHealthCareCatalog inNetworkHealthCareCatalog = clinic.getNetworkHealthCareList();
+            Faker faker = new Faker();             // generate 20 clinics to SJ  
+            for (int index = 0; index < 20; index++) {
+                String randomStName = faker.address().streetAddress();
+                Location location = new Location("San Jose", randomStName);
+                String randomHealthCareName = faker.name().firstName()+ " Clinic";
+                OtherHealthCare sjHC = new OtherHealthCare(randomHealthCareName, location);
+                inNetworkHealthCareCatalog.addMedicalSourceToSJ(sjHC);
+            }
+
+            // generate 20 clinics to PA
+            for (int index = 0; index < 20; index++) {
+                String randomStName = faker.address().streetAddress();
+                Location location = new Location("Palo Alto", randomStName);
+                String randomHealthCareName = faker.name().firstName()+ " Clinic";
+                OtherHealthCare paHC = new OtherHealthCare(randomHealthCareName, location);
+                inNetworkHealthCareCatalog.addMedicalSourceToPA(paHC);
+            }
+            // generate 20 clinics to SV
+            for (int index = 0; index < 20; index++) {
+                String randomStName = faker.address().streetAddress();
+                Location location = new Location("Sunnyvale", randomStName);
+                String randomHealthCareName = faker.name().firstName()+ " Clinic";
+                OtherHealthCare svHC = new OtherHealthCare(randomHealthCareName, location);
+                inNetworkHealthCareCatalog.addMedicalSourceToSV(svHC);
+            }
     }
+
 }

@@ -13,6 +13,14 @@ public class Site {
 
     Location location;
 
+    public Location getLocation() {
+        return location;
+    }
+
+    public String getLocationString() {
+        return location.toString();
+    }
+
     public Site(Location loc) {
         location = loc;
     }

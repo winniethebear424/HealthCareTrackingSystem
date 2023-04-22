@@ -19,10 +19,14 @@ import java.util.Random;
 public class PatientDirectory {
     Clinic clinic;
     ArrayList<Patient> patients;
+    ArrayList<Patient> infectiousPaitents;
+    ArrayList<Patient> confirmedPatients;
 
     PatientDirectory(Clinic clinic) {
         this.clinic = clinic;
         patients = new ArrayList<Patient>();
+        infectiousPaitents = new ArrayList<Patient>();
+        confirmedPatients = new ArrayList<Patient>();
     }
 
     public int getConfirmedPositiveTotals() {
@@ -59,13 +63,44 @@ public class PatientDirectory {
         return patients.get(randonIndex);
     }
 
-
     public ArrayList<Patient> getPatients() {
         return patients;
     }
 
     public void addPatient(Patient patient) {
         patients.add(patient);
+    }
+    
+
+    public void collectInfectiousPatient(){
+        for (Patient sickPatient: patients){
+            if (sickPatient.isConfirmedInfectiousPositive()){
+                infectiousPaitents.add(sickPatient);
+            } 
+        }
+    }
+
+    public void collectconfirmedPatients(){
+        for (Patient sickPatient: patients){
+            if (sickPatient.isConfirmedPositive()){
+                confirmedPatients.add(sickPatient);
+            } 
+        }
+    }
+
+    public Patient pickRandomInfectiousPatient(){
+        if (infectiousPaitents.size() == 0) return null;
+        Random r = new Random();
+        int randonIndex = r.nextInt(infectiousPaitents.size());
+        return infectiousPaitents.get(randonIndex);
+    }
+
+    public ArrayList<Patient> getInfectiousPaitents() {
+        return infectiousPaitents;
+    }
+
+    public ArrayList<Patient> getConfirmedPatients() {
+        return confirmedPatients;
     }
 
 }

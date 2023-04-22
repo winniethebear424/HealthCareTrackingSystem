@@ -35,6 +35,8 @@ public class VitalSigns {
         return newVitals;
     }
 
+    
+
     public Boolean areNormal() {
         boolean normal = true;
         for (VitalSignMetric vsm : vitalSigns) {
@@ -43,6 +45,10 @@ public class VitalSigns {
         }
 
         return normal;
+    }
+
+    public ArrayList<VitalSignMetric> getVitalSigns() {
+        return vitalSigns;
     }
 
 }

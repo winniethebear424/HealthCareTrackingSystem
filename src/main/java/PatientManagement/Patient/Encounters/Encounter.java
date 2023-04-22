@@ -7,6 +7,7 @@ package PatientManagement.Patient.Encounters;
 
 import java.util.Date;
 
+import PatientManagement.Catalogs.AgeGroup;
 import PatientManagement.Catalogs.Limits;
 import PatientManagement.Catalogs.VitalSignsCatalog;
 import PatientManagement.Clinic.Clinic;
@@ -56,6 +57,7 @@ public class Encounter {
         this.event = event;
         vitalSigns = new VitalSigns(this);
         // this.encounterHistory = encounterHistory;
+        patient.getPerson().addSeen(event.getDateString(), event.getSite().getLocationString());
         
         if (vaccinationOrder != null) {
             this.vaccinationOrder = vaccinationOrder;
@@ -174,6 +176,17 @@ public class Encounter {
         } else if (treatmentOrder != null) {
             treatmentOrder.printTreatmentOrderDetail();
         }
+        System.out.println(); 
+        System.out.println("----------------------------- Vital Signs -----------------------------");
+        System.out.printf("%-40s | %-7s | %-13s | %-10s\n", "Vital Sign " , "Value " , "Normal Range ", "Normal ");
+        for (VitalSignMetric vitalSignMetric: vitalSigns.getVitalSigns()){
+            String vsName = vitalSignMetric.getName();
+            int vsValue = vitalSignMetric.getValue();
+            String vsRange = vitalSignMetric.getUpperLower().getRangeString();
+            Boolean vsResult = vitalSignMetric.isNormal();
+            System.out.printf("%-40s | %-7s | %-13s | %-10s\n", vsName , vsValue , vsRange , vsResult);
+        }
+
         System.out.println(); 
     }
     
