@@ -12,6 +12,7 @@ import PatientManagement.Catalogs.Limits;
 import PatientManagement.Catalogs.VitalSignsCatalog;
 import PatientManagement.Clinic.Clinic;
 import PatientManagement.Clinic.Event;
+import PatientManagement.Clinic.InNetworkHealthCareCatalog;
 import PatientManagement.Patient.Patient;
 import PatientManagement.Patient.Orders.AssessmentOrder;
 import PatientManagement.Patient.Orders.MedicationOrder;
@@ -33,7 +34,7 @@ public class Encounter {
     Diagnosis diagnosis;
     Event event;
     VitalSigns vitalSigns;
-    // EncounterHistory encounterHistory;
+    EncounterHistory encounterHistory;
     VaccinationOrder vaccinationOrder;
     AssessmentOrder assessmentOrder;
     MedicationOrder medicationOrder;
@@ -47,7 +48,7 @@ public class Encounter {
         this.diagnosis = diagnosis;
         this.event = event;
         vitalSigns = new VitalSigns(this);
-        // this.encounterHistory = encounterHistory;
+        this.encounterHistory = encounterHistory;
     }
 
     public Encounter(Patient patient, String chiefComplaint, Diagnosis diagnosis, Event event, VaccinationOrder vaccinationOrder, AssessmentOrder assessmentOrder, MedicationOrder medicationOrder, TreatmentOrder treatmentOrder) {
@@ -84,7 +85,7 @@ public class Encounter {
         chiefComplaint = cc;
         event = ev;
         patient = p;
-        // encounterHistory = eh;
+        encounterHistory = eh;
     }
 
     public Encounter(Patient patient, VaccinationOrder vaccinationOrder){
@@ -144,6 +145,11 @@ public class Encounter {
 
     public TreatmentOrder getTreatmentOrder() {
         return treatmentOrder;
+    }
+
+    public void findLocalMedicalSource(InNetworkHealthCareCatalog inNetworkHealthCareCatalog){
+        
+
     }
 
 

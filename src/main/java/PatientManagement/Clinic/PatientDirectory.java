@@ -29,6 +29,14 @@ public class PatientDirectory {
         confirmedPatients = new ArrayList<Patient>();
     }
 
+    public Patient findPatientByName (String patientName){
+        for (Patient patient: patients){
+            if(patient.getPerson().getId() == patientName){}
+            return patient;
+        }
+        return null;
+    }
+
     public int getConfirmedPositiveTotals() {
         int sum = 0;
 

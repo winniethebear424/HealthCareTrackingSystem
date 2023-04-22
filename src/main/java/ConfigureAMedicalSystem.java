@@ -44,6 +44,9 @@ public class ConfigureAMedicalSystem {
         // Add vital signs info
         // loadVitalSignStandard(clinic);
 
+        // Add other medical source
+        loadOtherMedicalSource(clinic);
+
         // Add dieases
         loadDiseaseInfo(clinic);
 
@@ -62,9 +65,6 @@ public class ConfigureAMedicalSystem {
 
         // Add Evens
         loadEventandEncounters(clinic);
-
-        // Add other medical source
-        loadOtherMedicalSource(clinic);
 
         return clinic;
     }
@@ -116,6 +116,40 @@ public class ConfigureAMedicalSystem {
     //     elderlyBMI.addLimits(theElderly,30 , 25);
     // }
 
+    static void loadOtherMedicalSource(Clinic clinic){
+        InNetworkHealthCareCatalog inNetworkHealthCareCatalog = clinic.getNetworkHealthCareList();
+        Faker faker = new Faker();   
+
+        // randomly generate 20 - 30 medical insititutions to San Jose city  
+        ArrayList<OtherHealthCare> sjMedicalSource = new ArrayList<OtherHealthCare>();
+        for (int index = 0; index < getRandom(20, 30); index++) {
+            String randomStName = faker.address().streetAddress();
+            Location location = new Location("San Jose", randomStName);
+            String randomHealthCareName = faker.name().firstName()+ " Clinic";
+            sjMedicalSource.add(new OtherHealthCare(randomHealthCareName, location));
+        }
+        inNetworkHealthCareCatalog.addNewCityAndNewSource("San Jose", sjMedicalSource);
+
+         // randomly generate 20 - 30 medical insititutions to Palo Alto city  
+         ArrayList<OtherHealthCare> paMedicalSource = new ArrayList<OtherHealthCare>();
+         for (int index = 0; index < getRandom(20, 30); index++) {
+             String randomStName = faker.address().streetAddress();
+             Location location = new Location("Palo Alto", randomStName);
+             String randomHealthCareName = faker.name().firstName()+ " Clinic";
+             paMedicalSource.add(new OtherHealthCare(randomHealthCareName, location));
+         }
+         inNetworkHealthCareCatalog.addNewCityAndNewSource("Palo Alto", sjMedicalSource);
+ 
+         // randomly generate 20 - 30 medical insititutions to Sunnyvale city  
+         ArrayList<OtherHealthCare> syMedicalSource = new ArrayList<OtherHealthCare>();
+         for (int index = 0; index < getRandom(20, 30); index++) {
+             String randomStName = faker.address().streetAddress();
+             Location location = new Location("Sunnyvale", randomStName);
+             String randomHealthCareName = faker.name().firstName()+ " Clinic";
+             paMedicalSource.add(new OtherHealthCare(randomHealthCareName, location));
+         }
+         inNetworkHealthCareCatalog.addNewCityAndNewSource("Sunnyvale", syMedicalSource);
+}
 
     static void loadDiseaseInfo(Clinic clinic){
         DiseaseCatalog diseaseCatalog = clinic.getDiseaseCatalog();
@@ -456,35 +490,6 @@ public class ConfigureAMedicalSystem {
                 
             }
         }
-        }
-
-        static void loadOtherMedicalSource(Clinic clinic){
-            InNetworkHealthCareCatalog inNetworkHealthCareCatalog = clinic.getNetworkHealthCareList();
-            Faker faker = new Faker();             // generate 20 clinics to SJ  
-            for (int index = 0; index < 20; index++) {
-                String randomStName = faker.address().streetAddress();
-                Location location = new Location("San Jose", randomStName);
-                String randomHealthCareName = faker.name().firstName()+ " Clinic";
-                OtherHealthCare sjHC = new OtherHealthCare(randomHealthCareName, location);
-                inNetworkHealthCareCatalog.addMedicalSourceToSJ(sjHC);
-            }
-
-            // generate 20 clinics to PA
-            for (int index = 0; index < 20; index++) {
-                String randomStName = faker.address().streetAddress();
-                Location location = new Location("Palo Alto", randomStName);
-                String randomHealthCareName = faker.name().firstName()+ " Clinic";
-                OtherHealthCare paHC = new OtherHealthCare(randomHealthCareName, location);
-                inNetworkHealthCareCatalog.addMedicalSourceToPA(paHC);
-            }
-            // generate 20 clinics to SV
-            for (int index = 0; index < 20; index++) {
-                String randomStName = faker.address().streetAddress();
-                Location location = new Location("Sunnyvale", randomStName);
-                String randomHealthCareName = faker.name().firstName()+ " Clinic";
-                OtherHealthCare svHC = new OtherHealthCare(randomHealthCareName, location);
-                inNetworkHealthCareCatalog.addMedicalSourceToSV(svHC);
-            }
     }
-
+        
 }
