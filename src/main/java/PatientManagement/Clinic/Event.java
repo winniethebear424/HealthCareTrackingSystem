@@ -6,7 +6,10 @@
 package PatientManagement.Clinic;
 
 import PatientManagement.Patient.Encounters.Encounter;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -14,18 +17,23 @@ import java.util.ArrayList;
  */
 public class Event {
 
-    String date;
+    Date date;
     Site site;
     String budgetcode;
-
     ArrayList<Encounter> encounters; // encounters that day
 
-    public Event(Site s, String bc) {
+    public Event(Site s, String bc, Date date) {
         site = s;
         budgetcode = bc;
-        date = "2022/02/27";
+        this.date = date;
         encounters = new ArrayList<Encounter>(); // encounters done at the event/site
+    }
 
+    public Event(String location, Date date) {
+        Location l = new Location(location);
+        Site s = new Site(l);
+        site = s;
+        this.date = date;
     }
 
     public void addEncounter(Encounter en) {
@@ -65,5 +73,18 @@ public class Event {
         } else {
             return false;
         }
+    }
+    public Date getDate() {
+        return date;
+    }
+
+    public String getDateString(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+        String formattedDate = dateFormat.format(date);
+        return formattedDate;
+    }
+
+    public Site getSite() {
+        return site;
     }
 }

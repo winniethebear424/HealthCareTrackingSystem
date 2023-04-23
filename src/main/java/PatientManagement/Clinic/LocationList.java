@@ -30,4 +30,10 @@ public class LocationList {
         return newLoc;
     }
 
+    public Location newLocation(String city, String street) {
+        Location newLoc = new Location(city, street);
+        locations.add(newLoc);
+        return newLoc;
+    }
+
 }

@@ -10,5 +10,18 @@ package PatientManagement.Patient.ClinicalHistory;
  * @author kal bugrara
  */
 public class Alergy {
+    String allergen;
+
+    public Alergy(String allergen) {
+        this.allergen = allergen;
+    }
+
+    public String getAllergens() {
+        return allergen;
+    }
+
+    public void setAllergens(String allergen) {
+        this.allergen = allergen;
+    }
 
 }

@@ -10,6 +10,7 @@ import PatientManagement.Patient.Patient;
 import PatientManagement.Persona.Person;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -18,11 +19,32 @@ import java.util.ArrayList;
 public class PatientDirectory {
     Clinic clinic;
     ArrayList<Patient> patients;
+    ArrayList<Patient> infectiousPaitents;
+    ArrayList<Patient> confirmedPatients;
 
     PatientDirectory(Clinic clinic) {
         this.clinic = clinic;
         patients = new ArrayList<Patient>();
+        infectiousPaitents = new ArrayList<Patient>();
+        confirmedPatients = new ArrayList<Patient>();
     }
+
+    public Patient findPatientByName (String patientName){
+        for (Patient patient: patients){
+            if(patient.getPerson().getId() == patientName){}
+            return patient;
+        }
+        return null;
+    }
+
+    public Patient findPatientByNameAndAge (String patientName, int age){
+        for (Patient patient: patients){
+            if(patient.getPerson().getId() == patientName && patient.getPerson().getAge() == age){}
+            return patient;
+        }
+        return null;
+    }
+    
 
     public int getConfirmedPositiveTotals() {
         int sum = 0;
@@ -49,6 +71,53 @@ public class PatientDirectory {
         Patient patient = new Patient(person, clinic);
         patients.add(patient);
         return patient;
+    }
+
+    public Patient pickRandomPatient(){
+        if (patients.size() == 0) return null;
+        Random r = new Random();
+        int randonIndex = r.nextInt(patients.size());
+        return patients.get(randonIndex);
+    }
+
+    public ArrayList<Patient> getPatients() {
+        return patients;
+    }
+
+    public void addPatient(Patient patient) {
+        patients.add(patient);
+    }
+    
+
+    public void collectInfectiousPatient(){
+        for (Patient sickPatient: patients){
+            if (sickPatient.isConfirmedInfectiousPositive()){
+                infectiousPaitents.add(sickPatient);
+            } 
+        }
+    }
+
+    public void collectconfirmedPatients(){
+        for (Patient sickPatient: patients){
+            if (sickPatient.isConfirmedPositive()){
+                confirmedPatients.add(sickPatient);
+            } 
+        }
+    }
+
+    public Patient pickRandomInfectiousPatient(){
+        if (infectiousPaitents.size() == 0) return null;
+        Random r = new Random();
+        int randonIndex = r.nextInt(infectiousPaitents.size());
+        return infectiousPaitents.get(randonIndex);
+    }
+
+    public ArrayList<Patient> getInfectiousPaitents() {
+        return infectiousPaitents;
+    }
+
+    public ArrayList<Patient> getConfirmedPatients() {
+        return confirmedPatients;
     }
 
 }
