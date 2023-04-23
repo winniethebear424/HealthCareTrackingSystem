@@ -1,4 +1,6 @@
 
+import java.util.Scanner;
+
 import com.github.javafaker.Faker;
 
 import PatientManagement.Catalogs.AgeGroup;
@@ -73,12 +75,5 @@ public class PatientCareMain {
         clinic.printoutInfectionReport(1);
 
     }
-
-
-
-
-
-
-    
 
 }

@@ -36,6 +36,12 @@ public class VaccinationOrder extends Order {
         this.date = date;
         this.clinic = clinic;
     }
+    public VaccinationOrder(String vacineName){
+        vaccinationOrderItems = new ArrayList<VOrderItem>();
+        Vaccine v = new Vaccine(vacineName);
+        VOrderItem vOrderItem = new VOrderItem(v);
+        vaccinationOrderItems.add(vOrderItem);
+    }
 
     public Encounter getEncounter() {
         return encounter;

@@ -103,6 +103,10 @@ public class Patient {
         return false;
     }
 
+    public void addEncounter(Encounter encounter){
+        encounterhistory.getEncounterList().add(encounter);
+    }
+
     public Person getPerson() {
         return person;
     }
@@ -161,6 +165,10 @@ public class Patient {
 
     public void setAlergyhistory(AlergyHistory alergyhistory) {
         this.alergyhistory = alergyhistory;
+    }
+
+    public void addAllergy(Alergy alergy){
+        alergyhistory.addAlergyInfo(alergy);
     }
 
     public String getPastientLastestSeenTimeString(){

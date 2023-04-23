@@ -24,6 +24,10 @@ public class VOrderItem {
         
     }
 
+    public VOrderItem(Vaccine selectedVaccine) {
+        this.selectedVaccine = selectedVaccine;
+    }
+    
     public int getVOrderItemTotal(){
         return unitPrice * dose;
     }
