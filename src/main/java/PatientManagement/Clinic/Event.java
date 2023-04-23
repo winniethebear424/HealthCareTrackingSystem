@@ -29,13 +29,6 @@ public class Event {
         encounters = new ArrayList<Encounter>(); // encounters done at the event/site
     }
 
-    public Event(String location, Date date) {
-        Location l = new Location(location);
-        Site s = new Site(l);
-        site = s;
-        this.date = date;
-    }
-
     public void addEncounter(Encounter en) {
         encounters.add(en);
     }

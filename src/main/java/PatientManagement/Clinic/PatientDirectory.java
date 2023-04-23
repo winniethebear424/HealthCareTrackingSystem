@@ -37,15 +37,6 @@ public class PatientDirectory {
         return null;
     }
 
-    public Patient findPatientByNameAndAge (String patientName, int age){
-        for (Patient patient: patients){
-            if(patient.getPerson().getId() == patientName && patient.getPerson().getAge() == age){}
-            return patient;
-        }
-        return null;
-    }
-    
-
     public int getConfirmedPositiveTotals() {
         int sum = 0;
 

@@ -16,7 +16,7 @@ import java.util.Map;
  * @author kal bugrara
  */
 public class Person {
-
+    String name;
     String id;
     Person mother;
     Person father;
@@ -30,6 +30,16 @@ public class Person {
         siblings = new ArrayList<Person>();
         age = a;
         Seen = new HashMap<String, String>();
+    }
+
+    public Person(String name, String id, int a) {
+        this.id = id;
+        this.name = name;
+        age = a;
+        Seen = new HashMap<String, String>();
+    }
+    public String getName(){
+        return name;
     }
     
     public Person getMother() {

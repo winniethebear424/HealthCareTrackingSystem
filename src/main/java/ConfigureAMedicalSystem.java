@@ -1,12 +1,12 @@
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Random;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.ThreadPoolExecutor.DiscardOldestPolicy;
 
 import com.github.javafaker.Faker;
-
+import java.time.format.DateTimeFormatter;
 import PatientManagement.Catalogs.AgeGroup;
 import PatientManagement.Catalogs.Drug;
 import PatientManagement.Catalogs.DrugCatalog;
@@ -38,6 +38,15 @@ import PatientManagement.Persona.Person;
 import PatientManagement.Persona.PersonDirectory;
 
 public class ConfigureAMedicalSystem {
+
+    private HashMap<String, String> locations;
+    private ArrayList<Person> personlist;
+    private ArrayList<Person> potentialInfected;
+    public ConfigureAMedicalSystem() {
+        PersonDirectory pd = new PersonDirectory();
+        locations = new HashMap<String, String>();
+        personlist =new ArrayList<Person>();
+    }
     public static Clinic createAClinicAndLoadData(String name) {
         Clinic clinic = new Clinic(name);
 
@@ -413,12 +422,23 @@ public class ConfigureAMedicalSystem {
                 MedicationOrder medicationOrder = null;
                 TreatmentOrder treatmentOrder = null;
 
+                String[] loc = new String[]{
+                        "Main St, San Jose",           //1
+                        "Oak St, San Jose",            //2
 
+                        "First St, Sunnyvale",         //1
+                        "Second St, Sunnyvale",        //2
+
+                        "Zucchini St, Palo Alto",      //1
+                        "Mango St, Palo Alto",         //2
+
+
+                };
                 // generate order base on the diagnosis
                 if (diagnosis.getCategory().equals("Infectious")){
                     if (diagnosis.isConfirmed()){
                         diseaseCatalog.addConfirmedDiagnosis(diagnosis);
-                        // if the patient is confirmed to infectious disease, generate a vaccination order and randomly generate 1 to 3 vaccination order items
+                        // if the patient is confirmed to infectious disease, generate a vaccination order and randomly generate 1 to 3 vaccination order items.
                         int randomItemCount = getRandom(1, 3);
                         ArrayList<VOrderItem> vOrderItems = new ArrayList<VOrderItem>();
                         for (int itemIndex = 0; itemIndex < randomItemCount; itemIndex++) {
@@ -431,6 +451,16 @@ public class ConfigureAMedicalSystem {
                         vaccinationOrder = new VaccinationOrder(vOrderItems, patient, event.getDate(), clinic);
                         patient.addVaccinationOrder(vaccinationOrder);
                         vaccinationOrder.ExecuteOrder();
+
+                        //then track the infectious disease patient's lastSeen address
+                        LocalDate date = faker.date().past(2, TimeUnit.DAYS).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+                        String time = formatter.format(date);
+                        Random r = new Random();
+                        String location = loc[r.nextInt(loc.length)];
+                        patient.getPerson().addSeen(time, location);
+
+
                     } else {
                         // if the patient lookes like have infectious disease but not be confirmed yet, assign assessment
                         assessmentOrder = new AssessmentOrder(faker.medical().diseaseName() + " Assessment", patient, event.getDate(), clinic);
@@ -491,5 +521,91 @@ public class ConfigureAMedicalSystem {
             }
         }
     }
-        
+
+
+    public ArrayList<Person> getRandomInfoAll() {
+//V. #1 Randomly pick group of residents recovered from infectious diseases and closely monitor their mobility as the neighbourhood would like to protect the rest residents.
+        Faker faker = new Faker();
+//        TreeMap<String, String> sortedLocations = new TreeMap<>(locations);   // Create a TreeMap to sort the entries by key (date)
+        int patientCount = 20;
+        String[] stressAddresses = new String[]{
+                "Main St, San Jose",           //1
+                "Oak St, San Jose",            //2
+//                "SantaClare St, San Jose",     //3
+//                "Avster St, San Jose",         //4
+//                "Tea St, San Jose",            //5
+
+                "First St, Sunnyvale",         //1
+                "Second St, Sunnyvale",        //2
+//                "Third St, Sunnyvale",         //3
+//                "Forth St, Sunnyvale",         //4
+//                "Fifth St, Sunnyvale",         //5
+
+                "Zucchini St, Palo Alto",      //1
+                "Mango St, Palo Alto",         //2
+//                "Melon St, Palo Alto",         //3
+//                "Papaya St, Palo Alto",        //4
+//                "Cantaloupe St, Palo Alto",    //5
+
+        };
+
+        // Generate 20 random ppl:
+        for (int i = 0; i < patientCount; i++) {
+            String name = faker.name().fullName();
+            String id = faker.idNumber().valid();  //.valid() is a method in the Faker library to check ↓
+            // whether the generated data is valid according to the format specified.
+            int age = faker.number().numberBetween(1, 99);
+            Person p = new Person(name, id, age);
+            this.personlist.add(p);
+
+
+            // Generate random time(in the past 8 days) and location(8 pcs of records for each) for each person:
+            for (Person person : personlist) {
+                System.out.println("-----------------------------Patient Location Tracking # " + (personlist.indexOf(person) + 1) + " --------------------------");
+                System.out.println("|           Name: " + String.format(" %-22s | %-15s %-20s ", person.getName(), "ID: " + person.getPersonId(), "Age: " + person.getAge() + "" +
+                        "                  |"));
+
+                TreeMap<String, String> sortedLocations = new TreeMap<>();   // This helps to put hashmap in sorted order
+                for (int j = 0; j < 5; j++) {
+                    LocalDate date = faker.date().past(5, TimeUnit.DAYS).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+                    String time = formatter.format(date);
+                    Random random = new Random();
+                    String randomStreetAddress = stressAddresses[random.nextInt(stressAddresses.length)];
+                    person.addSeen(time, randomStreetAddress);
+                    HashMap<String, String> locations = person.getSeen();
+                    sortedLocations.putAll(locations);                      //To sort the freshly generated hashmap in order
+                }
+                for (Map.Entry<String, String> entry : sortedLocations.entrySet()) {
+                    System.out.println("| Last Seen Date:  " + entry.getKey() + "             | Last Seen Loc:  " + entry.getValue());
+                }
+
+            }
+        }
+        return personlist;
+    }
+
+
+    public ArrayList<Person> getPotentialInfected(String time, String location){
+//V. #2 Potential patient on track (based on #1 and a specific location and time input
+//V. #3 Calculate street infection case per day, automatically shows level of risk
+        int sum = 0;
+        System.out.println(String.format("\n **************************** Potential Patient Tracking *****************************\n Here's a list of potential patients, please be cautious! "));
+        for (Person person : personlist) {
+            if (person.getSeen().containsKey(time) && person.getSeen().get(time).equals(location)) {
+                sum = sum+=1;
+                System.out.println(String.format("| Name:%-34s | ID:%-37s |", person.getName(), person.getPersonId()));
+            }
+        }
+        if (sum==0){
+            System.out.println("There are: "+sum+ " potential cases on this street, risk level:Low ★☆☆☆☆");
+        }
+        if (sum!=0){
+            if (sum <3){System.out.println("There are: "+sum+ " potential cases on this street, risk level:Medium ★★★☆☆");}
+            else {System.out.println("There are: "+sum+ " potential cases on this street, risk level:High ★★★★★");}
+        }
+        return potentialInfected;
+
+    }
 }
+

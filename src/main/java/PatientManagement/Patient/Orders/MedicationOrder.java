@@ -34,12 +34,6 @@ public class MedicationOrder {
         }
     }
 
-    public MedicationOrder(String drugName){
-        Drug drug = new Drug(drugName);
-        drugs = new ArrayList<Drug>();
-        drugs.add(drug);
-    }
-
     public void setEncounter(Encounter encounter) {
         this.encounter = encounter;
     }

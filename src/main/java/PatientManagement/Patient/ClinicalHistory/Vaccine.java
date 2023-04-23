@@ -19,9 +19,6 @@ public class Vaccine {
         this.vaccineName = vaccineName;
         this.preventedInfectiousDisease = preventedInfectiousDisease;
     }
-    public Vaccine(String vaccineName){
-        this.vaccineName = vaccineName;
-    }
 
     public String getVaccineName() {
         return vaccineName;

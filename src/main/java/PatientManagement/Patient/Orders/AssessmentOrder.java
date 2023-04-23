@@ -31,9 +31,6 @@ public class AssessmentOrder {
         this.date = date;
         this.clinic = clinic;
     }
-    public AssessmentOrder(String assessmentName) {
-        this.assessmentName = assessmentName;
-    }
     
     public void setEncounter(Encounter encounter) {
         this.encounter = encounter;

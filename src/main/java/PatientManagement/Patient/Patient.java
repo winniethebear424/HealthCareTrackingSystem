@@ -103,10 +103,6 @@ public class Patient {
         return false;
     }
 
-    public void addEncounter(Encounter encounter){
-        encounterhistory.getEncounterList().add(encounter);
-    }
-
     public Person getPerson() {
         return person;
     }
@@ -165,10 +161,6 @@ public class Patient {
 
     public void setAlergyhistory(AlergyHistory alergyhistory) {
         this.alergyhistory = alergyhistory;
-    }
-
-    public void addAllergy(Alergy alergy){
-        alergyhistory.addAlergyInfo(alergy);
     }
 
     public String getPastientLastestSeenTimeString(){
@@ -351,7 +343,11 @@ public class Patient {
         System.out.println("----------- Latest Encounter -----------");
         System.out.println("Chief Complaint: " + latestEncounter.getChiefComplaint());
         System.out.println("Diagnosis: " + latestEncounter.getDiagnosis().getDiseaseName() + "; Type: " + latestEncounter.getDiagnosis().getCategory()+ "; Confirmed: " + latestEncounter.getDiagnosis().isConfirmed());
-        System.out.println();
+        if (latestEncounter.getDiagnosis().isConfirmed() == true){
+            System.out.println("Person's LastSeen: " + person.getLastSeen());
+        }
+        else System.out.println("There is no record for non-infected patient");
+
     }
 
 

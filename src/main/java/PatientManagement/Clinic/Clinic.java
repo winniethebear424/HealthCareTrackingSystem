@@ -162,6 +162,13 @@ public class Clinic {
             double infectiousRatio = (double)infectiousCount / allPatientCount * 100;    
             System.out.printf("%-18s %-18s %-18s %-18s %-18s %-18s\n", city, allPatientCount, confirmedCount, infectiousCount, otherCount,String.format("%.2f%%", infectiousRatio));
         }
+
+
+
+//now print out trends in different city in different month
+//        System.out.println("-------------------------------------------------------------------------------------------------------------");
+ //       System.out.println("                                              Report of Infection                           ");
+ //       System.out.println("-------------------------------------------------------------------------------------------------------------");
     }
 
 }
