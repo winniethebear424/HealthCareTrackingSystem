@@ -5,13 +5,9 @@
  */
 package PatientManagement.Clinic;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.*;
 
 import com.github.javafaker.Faker;
 
@@ -42,6 +38,7 @@ public class Clinic {
     VaccineCatalog vaccineCatalog;
     DiseaseCatalog diseaseCatalog;
     InNetworkHealthCareCatalog networkHealthCareList;
+    private int CitypotentialInfected;
 
     public Clinic(String n) {
         name = n;
@@ -57,9 +54,9 @@ public class Clinic {
         networkHealthCareList = new InNetworkHealthCareCatalog();
     }
 
-    public SiteCatalog getSiteCatalog() {
+    public SiteCatalog getSiteCatalog(){
         return sitelist;
-    }
+        }
 
     public LocationList getLocationList() {
         return locationlist;
@@ -161,14 +158,49 @@ public class Clinic {
             int otherCount = confirmedCount - infectiousCount;
             double infectiousRatio = (double)infectiousCount / allPatientCount * 100;    
             System.out.printf("%-18s %-18s %-18s %-18s %-18s %-18s\n", city, allPatientCount, confirmedCount, infectiousCount, otherCount,String.format("%.2f%%", infectiousRatio));
+
+
+            //V.InfectedNum
+          // working on future months
+//             Month currentMonth = LocalDate.now().getMonth();    // current month
+//             Month nextMonth = currentMonth.plus(1);     // following month...and so on...
+//             Month nextMonth2 = currentMonth.plus(2);
+//             Month nextMonth3 = currentMonth.plus(3);
+
+            //working on infection rate & city population
+            Faker faker = new Faker();
+            Random random = new Random();   // Generate a random infectious rate within the range
+            double minInfectiousRate = infectiousCount-0.15;    // Set the range of infectious rates (e.g. +-0.15)
+            double maxInfectiousRate = infectiousCount+0.15;
+            this.CitypotentialInfected = faker.number().numberBetween(1000, 10000);   // City population
+            int populationDensity = faker.number().numberBetween(300, 500);   // per street
+            double EstInfectiousRate = minInfectiousRate + (maxInfectiousRate - minInfectiousRate) * random.nextDouble();
+            int CitypotentialInfected = (int) (this.CitypotentialInfected * EstInfectiousRate);
+            double StPotentialInfected = populationDensity * EstInfectiousRate;
+//            System.out.println("-------------------------------------------------------------------------------------------------------------");
+//            System.out.println("                                   Trends on Infection deceases                                   ");
+//            System.out.println("-------------------------------------------------------------------------------------------------------------");
+//            System.out.printf("| %-15s %-15s| %-15s|","Data as of", currentMonth,city);
+//            System.out.printf("\n| %-15s| %-15s| %-15s| %-15s|",currentMonth,nextMonth,nextMonth2,nextMonth3);
+//            System.out.printf("\n| %-15s| %-15s| %-15s| %-15s|" ,CitypotentialInfected,CitypotentialInfected,CitypotentialInfected,CitypotentialInfected);
+        }
+        for (String city : cityNames) {
+            Month currentMonth = LocalDate.now().getMonth();    // current month
+            Month nextMonth = currentMonth.plus(1);     // following month...and so on...
+            Month nextMonth2 = currentMonth.plus(2);
+            Month nextMonth3 = currentMonth.plus(3);
+
+            System.out.println("\n----------------------------------------------------------------------------------------------");
+            System.out.println("                                   Trends on Infection deceases                                   ");
+            System.out.println("----------------------------------------------------------------------------------------------");
+            System.out.printf("%-18s %-18s %-18s ", city,"\nData as of",currentMonth);
+            System.out.printf("\n %-18s %-18s %-18s %-18s ", currentMonth, nextMonth, nextMonth2, nextMonth3);
+            System.out.printf("\n %-18s %-18s %-18s %-18s ", this.CitypotentialInfected, this.CitypotentialInfected, this.CitypotentialInfected, this.CitypotentialInfected);
+
         }
 
+    };
 
 
-//now print out trends in different city in different month
-//        System.out.println("-------------------------------------------------------------------------------------------------------------");
- //       System.out.println("                                              Report of Infection                           ");
- //       System.out.println("-------------------------------------------------------------------------------------------------------------");
     }
 
-}

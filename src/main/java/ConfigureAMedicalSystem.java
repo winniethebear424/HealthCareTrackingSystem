@@ -75,6 +75,8 @@ public class ConfigureAMedicalSystem {
         // Add Evens
         loadEventandEncounters(clinic);
 
+
+
         return clinic;
     }
 
@@ -527,7 +529,7 @@ public class ConfigureAMedicalSystem {
 //V. #1 Randomly pick group of residents recovered from infectious diseases and closely monitor their mobility as the neighbourhood would like to protect the rest residents.
         Faker faker = new Faker();
 //        TreeMap<String, String> sortedLocations = new TreeMap<>(locations);   // Create a TreeMap to sort the entries by key (date)
-        int patientCount = 20;
+        int patientCount = 10;
         String[] stressAddresses = new String[]{
                 "Main St, San Jose",           //1
                 "Oak St, San Jose",            //2
@@ -560,14 +562,14 @@ public class ConfigureAMedicalSystem {
 
 
             // Generate random time(in the past 8 days) and location(8 pcs of records for each) for each person:
+
             for (Person person : personlist) {
                 System.out.println("-----------------------------Patient Location Tracking # " + (personlist.indexOf(person) + 1) + " --------------------------");
                 System.out.println("|           Name: " + String.format(" %-22s | %-15s %-20s ", person.getName(), "ID: " + person.getPersonId(), "Age: " + person.getAge() + "" +
                         "                  |"));
-
                 TreeMap<String, String> sortedLocations = new TreeMap<>();   // This helps to put hashmap in sorted order
                 for (int j = 0; j < 5; j++) {
-                    LocalDate date = faker.date().past(5, TimeUnit.DAYS).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    LocalDate date = faker.date().past(8, TimeUnit.DAYS).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
                     String time = formatter.format(date);
                     Random random = new Random();
@@ -575,9 +577,10 @@ public class ConfigureAMedicalSystem {
                     person.addSeen(time, randomStreetAddress);
                     HashMap<String, String> locations = person.getSeen();
                     sortedLocations.putAll(locations);                      //To sort the freshly generated hashmap in order
+                    for (Map.Entry<String, String> entry : sortedLocations.entrySet()) {
+                        System.out.println("| Last Seen Date:  " + entry.getKey() + "             | Last Seen Loc:  " + entry.getValue());
                 }
-                for (Map.Entry<String, String> entry : sortedLocations.entrySet()) {
-                    System.out.println("| Last Seen Date:  " + entry.getKey() + "             | Last Seen Loc:  " + entry.getValue());
+
                 }
 
             }

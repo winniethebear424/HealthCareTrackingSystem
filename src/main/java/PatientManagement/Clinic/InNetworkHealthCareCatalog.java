@@ -1,9 +1,13 @@
 package PatientManagement.Clinic;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class InNetworkHealthCareCatalog {
+
     HashMap <String, ArrayList<OtherHealthCare>> cityMedicalSourceCatalog;
     // ArrayList<OtherHealthCare> sanJoseClinics;
     // ArrayList<OtherHealthCare> paloAltoClinics;
@@ -98,5 +102,27 @@ public class InNetworkHealthCareCatalog {
     //         System.out.println(svMedicalSourceName + "\t|\t" + svMedicalSourseAddress );
     //     }
     // }
+
+    // city infection trend
+
+//    public void InfectedNum (int num, int n , int n2 , int n3 , String city){
+//
+//        //working on month
+//        Month currentMonth = LocalDate.now().getMonth();    // current month
+//        Month nextMonth = currentMonth.plus(1);     // following month...and so on...
+//        Month nextMonth2 = currentMonth.plus(2);
+//        Month nextMonth3 = currentMonth.plus(3);
+//
+//        //working on number to culculate trend
+//        // Create maps to store the count of different types of patients for each city
+//
+//        System.out.println("-------------------------------------------------------------------------------------------------------------");
+//        System.out.println("                                   Trends on Infection deceases                                   ");
+//        System.out.println("-------------------------------------------------------------------------------------------------------------");
+//        System.out.printf("| %-20s| %-20s| %-20s|","Data as of", currentMonth,city);
+//        System.out.printf("| %-20s| %-20s| %-20s| %-20s|" ,currentMonth,nextMonth,nextMonth2,nextMonth3);
+//        System.out.printf("| %-20s| %-20s| %-20s| %-20s|" ,num,n,n2,n3);
+//
+//    }
 
 }
