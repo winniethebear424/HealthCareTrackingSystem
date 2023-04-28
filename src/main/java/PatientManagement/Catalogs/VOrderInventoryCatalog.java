@@ -16,6 +16,7 @@ import PatientManagement.Patient.ClinicalHistory.Vaccine;
  * @author kal bugrara
  */
 public class VOrderInventoryCatalog {
+
     private ArrayList<Vaccine> vaccines;
     private Map<Vaccine, Integer> vaccineInventory;
 

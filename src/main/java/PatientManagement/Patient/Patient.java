@@ -28,6 +28,7 @@ import PatientManagement.Persona.Person;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 import org.yaml.snakeyaml.constructor.CustomClassLoaderConstructor;
@@ -107,6 +108,10 @@ public class Patient {
         return person;
     }
 
+    public void addEncounter(Encounter encounter){
+        encounterhistory.getEncounterList().add(encounter);
+    }
+
     public Encounter newEncounter(String chiefcomplaint, Event ev) {
         return encounterhistory.newEncounter(chiefcomplaint, ev);
     }
@@ -163,6 +168,10 @@ public class Patient {
         this.alergyhistory = alergyhistory;
     }
 
+    public void addAllergy(Alergy alergy){
+        alergyhistory.addAlergyInfo(alergy);
+    }
+
     public String getPastientLastestSeenTimeString(){
         return encounterhistory.pickLastedEncounter().getEvent().getDateString();
     }
@@ -182,6 +191,7 @@ public class Patient {
             return;
         }
         System.out.printf("%-4s | %-30s | %-30s | %-5s | %-28s\n","no. ","Vaccination ","Prevented Disease ","Dose ","Date ");
+
         for(Vaccination vaccination: vaccinationHistory.getVaccinations()){
             int index = vaccinationHistory.getVaccinations().indexOf(vaccination);
             String vaccineName = vaccination.getvOrderItem().getSelectedVaccine().getVaccineName();
@@ -347,6 +357,7 @@ public class Patient {
             System.out.println("Person's LastSeen: " + person.getLastSeen());
         }
         else System.out.println("There is no record for non-infected patient");
+        System.out.println();
 
     }
 

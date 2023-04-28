@@ -20,6 +20,10 @@ public class Vaccine {
         this.preventedInfectiousDisease = preventedInfectiousDisease;
     }
 
+    public Vaccine(String vaccineName){
+        this.vaccineName = vaccineName;
+    }
+
     public String getVaccineName() {
         return vaccineName;
     }

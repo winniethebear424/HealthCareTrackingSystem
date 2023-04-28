@@ -24,12 +24,12 @@ public class InNetworkHealthCareCatalog {
     public void addNewCityAndNewSource (String city, ArrayList<OtherHealthCare> medicalSourceList){
         cityMedicalSourceCatalog.put(city, medicalSourceList);
     }
-
-    public void addANewInsititution (String city, OtherHealthCare institution){
-        ArrayList<OtherHealthCare> medicalSources = cityMedicalSourceCatalog.get(city);
-        medicalSources.add(institution);
-    }
-    
+//
+//    public void addANewInsititution (String city, OtherHealthCare institution){
+//        ArrayList<OtherHealthCare> medicalSources = cityMedicalSourceCatalog.get(city);
+//        medicalSources.add(institution);
+//    }
+//
     // public ArrayList<OtherHealthCare> getSanJoseClinics() {
     //     return sanJoseClinics;
     // }
@@ -54,12 +54,12 @@ public class InNetworkHealthCareCatalog {
     //     sunnyvaleClinics.add(medicalSources);
     // }
 
-    public void findAndPrintMedicalSource(String cityName){
-        System.out.println("------------------------------------------------------------");        
+    public void findAndPrintMedicalSource (String cityName){
+        System.out.println("------------------------------------------------------------");
         System.out.println("                " + cityName + " Medical Source");
-        System.out.println("------------------------------------------------------------");   
+        System.out.println("------------------------------------------------------------");
         System.out.println("Medical Source \t|\t Medical Source Address   ");
-        for(OtherHealthCare institution:cityMedicalSourceCatalog.get("San Jose")){
+        for(OtherHealthCare institution:cityMedicalSourceCatalog.get(cityName)){
             String insititutionName = institution.getHealthcareInsititutionName();
             String insititutionAddress = institution.getLocation().getFullAddressName();
             System.out.println(insititutionName + "\t|\t" + insititutionAddress);
@@ -67,17 +67,17 @@ public class InNetworkHealthCareCatalog {
         System.out.println();
     }
 
-    // public void findAndPrintSJMedicalSource(){
-    //     System.out.println("------------------------------------------------------------");        
-    //     System.out.println("\t\tSan Jose Medical Source\t\t");
-    //     System.out.println("------------------------------------------------------------");   
-    //     System.out.println("Medical Source \t|\t Medical Source Address   ");
-    //     for(OtherHealthCare sjMS:cityMedicalSourceCatalog.get("San Jose")){
-    //         String sjMedicalSourceName = sjMS.getHealthcareInsititutionName();
-    //         String sjMedicalSourseAddress = sjMS.getLocation().getFullAddressName();
-    //         System.out.println(sjMedicalSourceName + "\t|\t" + sjMedicalSourseAddress );
-    //     }
-    // }
+     public void findAndPrintSJMedicalSource(){
+         System.out.println("------------------------------------------------------------");
+         System.out.println("\t\tSan Jose Medical Source\t\t");
+         System.out.println("------------------------------------------------------------");
+         System.out.println("Medical Source \t|\t Medical Source Address   ");
+         for(OtherHealthCare sjMS:cityMedicalSourceCatalog.get("San Jose")){
+             String sjMedicalSourceName = sjMS.getHealthcareInsititutionName();
+             String sjMedicalSourseAddress = sjMS.getLocation().getFullAddressName();
+             System.out.println(sjMedicalSourceName + "\t|\t" + sjMedicalSourseAddress );
+         }
+     }
 
     // public void findAndPrintPAMedicalSource(){
     //     System.out.println("------------------------------------------------------------");        

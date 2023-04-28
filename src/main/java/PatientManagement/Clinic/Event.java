@@ -6,9 +6,11 @@
 package PatientManagement.Clinic;
 
 import PatientManagement.Patient.Encounters.Encounter;
-
+import java.util.Collections;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 
 /**
@@ -29,17 +31,24 @@ public class Event {
         encounters = new ArrayList<Encounter>(); // encounters done at the event/site
     }
 
+    public Event(String location, Date date) {
+        Location l = new Location(location);
+        Site s = new Site(l);
+        site = s;
+        this.date = date;
+    }
+
     public void addEncounter(Encounter en) {
         encounters.add(en);
     }
 
+    
     public int getConfirmedTotals() { // total numer of positive cases in event at the site
         int sum = 0;
         for (Encounter e : encounters) { // check all encounter at the event for confirmed cases
 
             if (e.getDiagnosis().isConfirmed()) {
                 sum = sum + 1;
-
             }
         }
 

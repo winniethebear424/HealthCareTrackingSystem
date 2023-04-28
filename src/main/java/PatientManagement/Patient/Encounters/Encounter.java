@@ -40,7 +40,6 @@ public class Encounter {
     MedicationOrder medicationOrder;
     TreatmentOrder treatmentOrder;
 
-
     public Encounter(Patient patient, String chiefComplaint, Diagnosis diagnosis, Event event,
             EncounterHistory encounterHistory) {
         this.patient = patient;
@@ -51,7 +50,9 @@ public class Encounter {
         this.encounterHistory = encounterHistory;
     }
 
-    public Encounter(Patient patient, String chiefComplaint, Diagnosis diagnosis, Event event, VaccinationOrder vaccinationOrder, AssessmentOrder assessmentOrder, MedicationOrder medicationOrder, TreatmentOrder treatmentOrder) {
+    public Encounter(Patient patient, String chiefComplaint, Diagnosis diagnosis, Event event,
+            VaccinationOrder vaccinationOrder, AssessmentOrder assessmentOrder, MedicationOrder medicationOrder,
+            TreatmentOrder treatmentOrder) {
         this.patient = patient;
         this.chiefComplaint = chiefComplaint;
         this.diagnosis = diagnosis;
@@ -59,22 +60,22 @@ public class Encounter {
         vitalSigns = new VitalSigns(this);
         // this.encounterHistory = encounterHistory;
         patient.getPerson().addSeen(event.getDateString(), event.getSite().getLocationString());
-        
+
         if (vaccinationOrder != null) {
             this.vaccinationOrder = vaccinationOrder;
             vaccinationOrder.setEncounter(this);
         }
-        
+
         if (assessmentOrder != null) {
             this.assessmentOrder = assessmentOrder;
             assessmentOrder.setEncounter(this);
         }
-        
+
         if (medicationOrder != null) {
             this.medicationOrder = medicationOrder;
             medicationOrder.setEncounter(this);
         }
-        
+
         if (treatmentOrder != null) {
             this.treatmentOrder = treatmentOrder;
             treatmentOrder.setEncounter(this);
@@ -88,7 +89,7 @@ public class Encounter {
         encounterHistory = eh;
     }
 
-    public Encounter(Patient patient, VaccinationOrder vaccinationOrder){
+    public Encounter(Patient patient, VaccinationOrder vaccinationOrder) {
         this.patient = patient;
         this.vaccinationOrder = vaccinationOrder;
     }
@@ -116,7 +117,7 @@ public class Encounter {
     }
 
     // public EncounterHistory getEncounterHistory() {
-    //     return encounterHistory;
+    // return encounterHistory;
     // }
 
     public boolean areVitalsNormal() {
@@ -126,7 +127,7 @@ public class Encounter {
     public Event getEvent() {
         return event;
     }
-    
+
     public String getChiefComplaint() {
         return chiefComplaint;
     }
@@ -147,11 +148,9 @@ public class Encounter {
         return treatmentOrder;
     }
 
-    public void findLocalMedicalSource(InNetworkHealthCareCatalog inNetworkHealthCareCatalog){
-        
+    public void findLocalMedicalSource(InNetworkHealthCareCatalog inNetworkHealthCareCatalog) {
 
     }
-
 
     public void printEncounterSummary() {
         String order = "";
@@ -170,9 +169,10 @@ public class Encounter {
         System.out.println("Patient Name: " + patient.getPerson().getPersonId());
         System.out.println("Date: " + event.getDate());
         System.out.println("Chief Complaint: " + chiefComplaint);
-        System.out.println("Diagnosis: " + diagnosis.getDiseaseName()+ "; Type: " + diagnosis.getCategory() + "; Confirmed: " + diagnosis.isConfirmed());
+        System.out.println("Diagnosis: " + diagnosis.getDiseaseName() + "; Type: " + diagnosis.getCategory()
+                + "; Confirmed: " + diagnosis.isConfirmed());
         System.out.println("Order: " + order);
-        System.out.println(); 
+        System.out.println();
         if (vaccinationOrder != null) {
             vaccinationOrder.printVaccinationOrderDetail();
         } else if (assessmentOrder != null) {
@@ -182,18 +182,18 @@ public class Encounter {
         } else if (treatmentOrder != null) {
             treatmentOrder.printTreatmentOrderDetail();
         }
-        System.out.println(); 
+        System.out.println();
         System.out.println("----------------------------- Vital Signs -----------------------------");
-        System.out.printf("%-40s | %-7s | %-13s | %-10s\n", "Vital Sign " , "Value " , "Normal Range ", "Normal ");
-        for (VitalSignMetric vitalSignMetric: vitalSigns.getVitalSigns()){
+        System.out.printf("%-40s | %-7s | %-13s | %-10s\n", "Vital Sign ", "Value ", "Normal Range ", "Normal ");
+        for (VitalSignMetric vitalSignMetric : vitalSigns.getVitalSigns()) {
             String vsName = vitalSignMetric.getName();
             int vsValue = vitalSignMetric.getValue();
             String vsRange = vitalSignMetric.getUpperLower().getRangeString();
             Boolean vsResult = vitalSignMetric.isNormal();
-            System.out.printf("%-40s | %-7s | %-13s | %-10s\n", vsName , vsValue , vsRange , vsResult);
+            System.out.printf("%-40s | %-7s | %-13s | %-10s\n", vsName, vsValue, vsRange, vsResult);
         }
 
-        System.out.println(); 
+        System.out.println();
     }
-    
+
 }

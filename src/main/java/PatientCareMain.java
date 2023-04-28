@@ -57,10 +57,11 @@ public class PatientCareMain {
 
         // check the patient's lasted encounter information
         randomPatient.getEncounterHistory().pickLastedEncounter().printEncounterSummary();
+        // randomPatient.getEncounterHistory().pickRandomeEncounter()
 
         // according to the patient lasted encounter information to find location, and printout local medical source
         String patientCity = randomPatient.getEncounterHistory().pickLastedEncounter().getEvent().getSite().getLocation().getCity();
-        inNetworkHealthCareCatalog.findAndPrintMedicalSource(patientCity);
+        inNetworkHealthCareCatalog.findAndPrintMedicalSource(patientCity); 
 
         // check the patient's vaccination history
         randomPatient.printVaccinationHistoryReport();
@@ -75,19 +76,16 @@ public class PatientCareMain {
         randomPatient.printDiagnosisReport();
 
         // Print infection report & Trends on Infection deceases
-        clinic.printoutInfectionReport(1);
-
+        clinic.printoutInfectionReport(2);
+        clinic.printInfectiousCountByCityForPastThreeMonths();
 
 
         //V. #1 Randomly pick group of residents recovered from infectious diseases and closely monitor their mobility as the neighbourhood would like to protect the rest residents.
         ConfigureAMedicalSystem config = new ConfigureAMedicalSystem();
-        config.getRandomInfoAll();
+         config.getRandomInfoAll();
 
         //V. #2 Potential patient on track (based on #1 and a specific location and time input
         //V. #3 Calculate street infection case per day, automatically shows level of risk
-        config.getPotentialInfected("04-18-2023","Oak St, San Jose");
-    }
-
-
+        config.getPotentialInfected("04-24-2023","Oak St, San Jose");
     }
 }

@@ -30,7 +30,7 @@
 //         int page = 1;
 //         String input;
 //         boolean exit = false;
-        
+
 //         while (!exit) {
 //             switch (page) {
 //                 case 1:
@@ -42,7 +42,8 @@
 //                     input = scanner.nextLine();
 //                     switch (input) {
 //                         case "1":
-//                             System.out.println("Please enter new patient's name and age OR enter 0 go back to the previous page");
+//                             System.out.println(
+//                                     "Please enter new patient's name and age OR enter 0 go back to the previous page");
 //                             String nameAge = scanner.nextLine();
 //                             if (nameAge.equals("0")) {
 //                                 break;
@@ -79,10 +80,7 @@
 //                             System.out.println("Please enter sibling's name and age, if N/A, please enter 0");
 //                             String siblingNameAge = scanner.nextLine();
 //                             String[] siblingNameAgeArray = siblingNameAge.split(" ");
-//                             if (siblingNameAgeArray.length < 2) {
-//                                 System.out.println("Invalid input.");
-//                                 break;
-//                             }
+
 //                             if (!siblingNameAgeArray[0].equals("0")) {
 //                                 String siblingName = siblingNameAgeArray[0];
 //                                 int siblingAge = Integer.parseInt(siblingNameAgeArray[1]);
@@ -101,7 +99,8 @@
 //                             System.out.println("Patient created. Please enter patient's chief complaint");
 //                             input = scanner.nextLine();
 //                             String chiefComplaint = input;
-//                             System.out.println("Please enter patient's diagnosis information (disease name, disease category, confirmed?)");
+//                             System.out.println(
+//                                     "Please enter patient's diagnosis information (disease name, disease category, confirmed?)");
 //                             input = scanner.nextLine();
 //                             String[] diagnosisInfo = input.split(",");
 //                             if (diagnosisInfo.length < 3) {
@@ -116,34 +115,33 @@
 //                             VaccinationOrder vo = null;
 //                             AssessmentOrder ao = null;
 //                             TreatmentOrder to = null;
-//                             System.out.println("Please enter patient's treatment order (medication order, vaccination order, treatment order, assessment order). Enter 0 to skip.");
+//                             System.out.println(
+//                                     "Please enter patient's treatment order (medication order, vaccination order, treatment order, assessment order). Enter 0 to skip.");
 //                             while (true) {
 //                                 input = scanner.nextLine();
 //                                 if (input.equals("0")) {
 //                                     break;
-//                                 }
-//                                 else if (input.equals("medication order")){
+//                                 } else if (input.equals("medication order")) {
 //                                     input = scanner.nextLine();
 //                                     System.out.println("Please enter drug name");
 //                                     mo = new MedicationOrder(input);
 //                                     newPatient.addMedicationOrder(mo);
-//                                 }
-//                                 else if(input.equals("vaccination order")){
+//                                 } else if (input.equals("vaccination order")) {
 //                                     input = scanner.nextLine();
 //                                     System.out.println("Please enter vaccine name");
 //                                     vo = new VaccinationOrder(input);
-//                                 }
-//                                 else if(input.equals("treatment order")){
+//                                     newPatient.addVaccinationOrder(vo);
+//                                 } else if (input.equals("treatment order")) {
 //                                     input = scanner.nextLine();
 //                                     System.out.println("Please enter treatment name");
 //                                     to = new TreatmentOrder(input);
-//                                 }
-//                                 else if(input.equals("assessment order")){
+//                                     newPatient.addTreatmentOrder(to);
+//                                 } else if (input.equals("assessment order")) {
 //                                     input = scanner.nextLine();
 //                                     System.out.println("Please enter assessment name");
 //                                     ao = new AssessmentOrder(input);
-//                                 }
-//                                 else{
+//                                     newPatient.addAssessmentOrder(ao);
+//                                 } else {
 //                                     System.out.println("Invalid input.");
 //                                     continue;
 //                                 }
@@ -151,14 +149,17 @@
 //                             Date currentDate = new Date();
 //                             String fakeCurrentLocation = "NEU St. NEU city";
 //                             Event event = new Event(fakeCurrentLocation, currentDate);
-//                             Encounter encounter = new Encounter(newPatient, chiefComplaint, diagnosis, event, vo, ao, mo, to);
+//                             Encounter encounter = new Encounter(newPatient, chiefComplaint, diagnosis, event, vo, ao,
+//                                     mo, to);
 //                             newPatient.addEncounter(encounter);
 //                             System.out.println("Encounter created.");
 //                             page = 1;
 //                             break;
 
 //                         case "2":
-//                             System.out.println("Please enter existing patient's name and age, or Enter 0 go back to the previous page.");
+
+//                             System.out.println(
+//                                     "Please enter existing patient's name and age, or Enter 0 go back to the previous page.");
 //                             nameAge = scanner.nextLine();
 //                             if (nameAge.equals("0")) {
 //                                 break;
@@ -176,97 +177,149 @@
 
 //                                 break;
 //                             }
-//                             System.out.println("Please enter patient's chief complaint");
+
+//                             System.out.println("Please pick an option:\n" +
+//                                     "1. Create New Encounter\n" +
+//                                     "2. Check Personal Information\n" +
+//                                     "3. Check Lasted Encounter Information\n" +
+//                                     "4. Find Local Medical Source for the Patient\n" +
+//                                     "5. Check Patient's Vaccination History\n" +
+//                                     "6. Check Patient's Assessment Information\n" +
+//                                     "7. Check Patient's Medication History\n" +
+//                                     "8. Check Patient's Diagnosis History Report\n" +
+//                                     "9. Exit");
 //                             input = scanner.nextLine();
-//                             existingPatient.setChiefComplaint(input);
-//                             System.out.println("Please enter patient's medical history");
-//                             input = scanner.nextLine();
-//                             existingPatient.setMedicalHistory(input);
-//                             System.out.println("Please enter patient's diagnosis information (disease name, disease category, confirmed?)");
-//                             input = scanner.nextLine();
-//                             diagnosisInfo = input.split(",");
-//                             if (diagnosisInfo.length < 3) {
-//                                 System.out.println("Invalid input.");
-//                                 break;
-//                             }
-//                             diseaseName = diagnosisInfo[0];
-//                             diseaseCategory = diagnosisInfo[1];
-//                             isConfirmed = Boolean.parseBoolean(diagnosisInfo[2]);
-//                             diagnosis = new Diagnosis(diseaseName, diseaseCategory, isConfirmed);
-//                             existingPatient.addDiagnosis(diagnosis);
-//                             System.out.println("Please enter patient's treatment order (medication order, vaccination order, treatment order, assessment order). Enter 0 to skip.");
-//                             while (true) {
-//                                 input = scanner.nextLine();
-//                                 if (input.equals("0")) {
+//                             switch (input) {
+//                                 case "1":
+//                                     System.out.println("Patient found. Please enter patient's chief complaint");
+//                                     input = scanner.nextLine();
+//                                     String epchiefComplaint = input;
+//                                     System.out.println(
+//                                             "Please enter patient's diagnosis information (disease name, disease category, confirmed?)");
+//                                     input = scanner.nextLine();
+//                                     String[] epdiagnosisInfo = input.split(",");
+//                                     String epdiseaseName = epdiagnosisInfo[0];
+//                                     String epdiseaseCategory = epdiagnosisInfo[1];
+//                                     boolean episConfirmed = Boolean.parseBoolean(epdiagnosisInfo[2]);
+//                                     Diagnosis epdiagnosis = new Diagnosis(epdiseaseName, epdiseaseCategory,
+//                                             episConfirmed);
+//                                     MedicationOrder epmo = null;
+//                                     VaccinationOrder epvo = null;
+//                                     AssessmentOrder epao = null;
+//                                     TreatmentOrder epto = null;
+//                                     System.out.println(
+//                                             "Please enter patient's treatment order (medication order, vaccination order, treatment order, assessment order). Enter 0 to skip.");
+//                                     while (true) {
+//                                         input = scanner.nextLine();
+//                                         if (input.equals("0")) {
+//                                             break;
+//                                         } else if (input.equals("medication order")) {
+//                                             input = scanner.nextLine();
+//                                             System.out.println("Please enter drug name");
+//                                             epmo = new MedicationOrder(input);
+//                                             existingPatient.addMedicationOrder(epmo);
+//                                         } else if (input.equals("vaccination order")) {
+//                                             input = scanner.nextLine();
+//                                             System.out.println("Please enter vaccine name");
+//                                             epvo = new VaccinationOrder(input);
+//                                             existingPatient.addVaccinationOrder(epvo);
+//                                         } else if (input.equals("treatment order")) {
+//                                             input = scanner.nextLine();
+//                                             System.out.println("Please enter treatment name");
+//                                             epto = new TreatmentOrder(input);
+//                                             existingPatient.addTreatmentOrder(epto);
+//                                         } else if (input.equals("assessment order")) {
+//                                             input = scanner.nextLine();
+//                                             System.out.println("Please enter assessment name");
+//                                             epao = new AssessmentOrder(input);
+//                                             existingPatient.addAssessmentOrder(epao);
+//                                         } else {
+//                                             System.out.println("Invalid input.");
+//                                             continue;
+//                                         }
+//                                     }
+//                                     Date currentDate2 = new Date();
+//                                     String fakeCurrentLocation2 = "NEU St. NEU city";
+//                                     Event event2 = new Event(fakeCurrentLocation2, currentDate2);
+//                                     Encounter epencounter = new Encounter(existingPatient, epchiefComplaint,
+//                                             epdiagnosis, event2, epvo, epao, epmo, epto);
+//                                     existingPatient.addEncounter(epencounter);
+//                                     System.out.println("Encounter created.");
+//                                     page = 1;
 //                                     break;
-//                                 }
-//                                 String[] treatmentOrder = input.split(",");
-//                                 if (treatmentOrder.length < 2) {
-//                                     System.out.println("Invalid input.");
-//                                     continue;
-//                                 }
-                            
 
+//                                 case "2":
+//                                     existingPatient.printPersonalInfo();
 
+//                                 case "3":
+//                                     existingPatient.getEncounterHistory().pickLastedEncounter().printEncounterSummary();
 
-//                 -----------------------
+//                                     // according to the patient lasted encounter information to find location, and
+//                                     // printout local medical source
+//                                 case "4":
+//                                     String patientCity = existingPatient.getEncounterHistory().pickLastedEncounter()
+//                                             .getEvent().getSite().getLocation().getCity();
+//                                     inNetworkHealthCareCatalog.findAndPrintMedicalSource(patientCity);
 
-//                             System.out.println("Please enter patient's chief complaint");
-//                             input = scanner.nextLine();
-//                             String chiefComplaint = input;
-//                             System.out.println("Please enter diagnosis disease");
-//                             input = scanner.nextLine();
-//                             String chiefComplaint = input;
+//                                 case "5":
+//                                     // check the patient's vaccination history
+//                                     existingPatient.printVaccinationHistoryReport();
 
-//                             newPatient.setChiefComplaint(input);
+//                                 case "6":
+//                                     // check the patient's assessment information
+//                                     existingPatient.printAssessmentReport();
 
-//                             System.out.println("Patient information added successfully.");
-//                             break;
-//                         case "2":
-//                             System.out.println("Please enter patient's ID or Enter 0 go back to the previous page");
-//                             input = scanner.nextLine();
-//                             if (input.equals("0")) {
-//                                 break;
+//                                 case "7":
+//                                     // check the patient's medication history
+//                                     existingPatient.printMedicationHistory();
+
+//                                 case "8":
+//                                     // check the patient's diagnosis history report
+//                                     existingPatient.printDiagnosisReport();
+
 //                             }
-//                             Patient patient = patientDirectory.getPatientByID(input);
-//                             if (patient == null) {
-//                                 System.out.println("Patient not found.");
-//                                 break;
-//                             }
-//                             System.out.println("Patient found. Please enter the date of visit (MM/DD/YYYY)");
-//                             String visitDate = scanner.nextLine();
-//                             System.out.println("Please enter the doctor's name");
-//                             String doctorName = scanner.nextLine();
-//                             Doctor doctor = clinic.getDoctorByName(doctorName);
-//                             if (doctor == null) {
-//                                 System.out.println("Doctor not found.");
-//                                 break;
-//                             }
-//                             System.out.println("Please enter the diagnosis");
-//                             String diagnosis = scanner.nextLine();
-//                             Visit visit = new Visit(visitDate, doctor, diagnosis);
-//                             patient.addVisit(visit);
-//                             System.out.println("Visit information added successfully.");
-//                             break;
 //                         case "3":
-//                             System.out.println("Please enter a keyword to search for");
+//                             System.out.println("Please pick an option:\n" +
+//                                     "1. Check Monthly Report of Infection in Different Cities\n" +
+//                                     "2. Check Trends on Infection Deceases in Past 3 Months\n" +
+//                                     "3. Check Infectious Patient's Mobility\n" +
+//                                     "4. Check Street Infection Risk\n" +
+//                                     "5. Exit");
 //                             input = scanner.nextLine();
-//                             inNetworkHealthCareCatalog.searchProviders(input);
-//                             break;
+//                             switch (input) {
+//                                 case "1":
+//                                     System.out.println(
+//                                             "Please input the month number, for example: if you want to check January data, enter 1 ");
+//                                     input = scanner.nextLine();
+//                                     int inputMonthNumber = Integer.parseInt(input);
+//                                     clinic.printoutInfectionReport(inputMonthNumber);
+
+//                                 case "2":
+//                                     clinic.printInfectiousCountByCityForPastThreeMonths();
+
+//                                 case "3":
+//                                     ConfigureAMedicalSystem config = new ConfigureAMedicalSystem();
+//                                     config.getRandomInfoAll();
+
+//                                 case "4":
+//                                     ConfigureAMedicalSystem config3 = new ConfigureAMedicalSystem();
+//                                     System.out.println(
+//                                             "Please input the date you want to check for, for example: 04-18-2023");
+//                                     input = scanner.nextLine();
+//                                     String stRiskDate = input;
+//                                     System.out.println(
+//                                             "Please input the street you want to check for, for example: Oak St, San Jose");
+//                                     input = scanner.nextLine();
+//                                     String stRiskStreet = input;
+//                                     config3.getPotentialInfected(stRiskDate, stRiskStreet);
+
+//                             }
 //                         case "4":
 //                             exit = true;
-//                             break;
-//                         default:
-//                             System.out.println("Invalid input.");
-//                             break;
 //                     }
-//                     break;
-//                 default:
-//                     System.out.println("Invalid page number.");
-//                     break;
+
 //             }
 //         }
 //     }
-    
 
 // }

@@ -29,6 +29,10 @@ public class TreatmentOrder {
         this.clinic = clinic;
     }
 
+    public TreatmentOrder(String treatment) {
+        this.treatment = treatment;
+    }
+
     public void setEncounter(Encounter encounter) {
         this.encounter = encounter;
     }
